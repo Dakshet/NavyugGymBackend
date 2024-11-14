@@ -293,10 +293,10 @@ async function createPdf(fullName, fullInfo, amount) {
       `
 
 
-        // const browser = await puppeteer.launch();
-        const browser = await puppeteer.launch({
-            executablePath: '/opt/render/.cache/puppeteer/chrome',
-        });
+        const browser = await puppeteer.launch();
+        // const browser = await puppeteer.launch({
+        //     executablePath: '/opt/render/.cache/puppeteer/chrome',
+        // });
 
 
         // const browser = await puppeteer.launch({
