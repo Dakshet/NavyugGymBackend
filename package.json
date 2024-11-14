@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prestart": "npx puppeteer browsers install chrome",
-    "postinstall": "npx puppeteer install",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "apt-get update && apt-get install -y wget ca-certificates fontconfig locales libx11-xcb1 libgconf-2-4 libnss3 libxss1 libasound2 libxrandr2",
+    "prestart": "npx puppeteer browsers install chrome || true",
+    "postinstall": "rm -rf /opt/render/.cache/puppeteer && npx puppeteer install",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
