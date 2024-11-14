@@ -293,7 +293,7 @@ async function createPdf(fullName, fullInfo, amount) {
       `
 
 
-        const browser = await puppeteer.launch();
+        // const browser = await puppeteer.launch();
         // const browser = await puppeteer.launch({
         //     executablePath: '/opt/render/.cache/puppeteer/chrome',
         // });
@@ -319,31 +319,50 @@ async function createPdf(fullName, fullInfo, amount) {
         //     args: ['--no-sandbox', '--disable-setuid-sandbox']
         // });
 
-        // // Rest of the PDF creation logic
+        // // // Rest of the PDF creation logic
+        // const page = await browser.newPage();
+
+
+        // // // Set content
+        // // console.log("page content", await page.setContent(htmlCode))   // deelte it.\
+        // await page.setContent(htmlCode);
+
+        // // const defaultPath = puppeteer.executablePath();
+        // // // console.log("Default executable path:", defaultPath);
+
+
+        // const outputDir = path.join(__dirname, 'files');
+        // if (!fs.existsSync(outputDir)) {
+        //     fs.mkdirSync(outputDir, { recursive: true });
+        // }
+
+
+        // const outputFile = path.join(outputDir, 'Receipt.pdf');
+        // await page.pdf({ path: outputFile, format: "A4" });
+
+        // await browser.close();
+
+        // console.log("PDF created at:", outputFile);
+        // return outputFile;
+
+
+        let outputFile = "./files/Receipt.pdf"
+
+        const browser = await puppeteer.launch();
         const page = await browser.newPage();
 
-
-        // // Set content
-        // console.log("page content", await page.setContent(htmlCode))   // deelte it.\
+        // Set content
         await page.setContent(htmlCode);
 
-        // const defaultPath = puppeteer.executablePath();
-        // // console.log("Default executable path:", defaultPath);
-
-
-        const outputDir = path.join(__dirname, 'files');
-        if (!fs.existsSync(outputDir)) {
-            fs.mkdirSync(outputDir, { recursive: true });
-        }
-
-
-        const outputFile = path.join(outputDir, 'Receipt.pdf');
+        // Generate pdf 
+        // Format means how data save in A4 size paper.
         await page.pdf({ path: outputFile, format: "A4" });
 
         await browser.close();
 
-        console.log("PDF created at:", outputFile);
-        return outputFile;
+        console.log("pdf created")
+
+        return "PDF created successfully!"
 
 
 
