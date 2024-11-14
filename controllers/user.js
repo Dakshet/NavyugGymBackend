@@ -7,8 +7,8 @@ const { google } = require("googleapis");
 const fs = require("fs")
 const path = require("path")
 const nodemailer = require("nodemailer")
-// const puppeteer = require("puppeteer")
-const puppeteer = require('puppeteer-core');
+const puppeteer = require("puppeteer")
+// const puppeteer = require('puppeteer-core');
 
 let success = false;
 
@@ -294,9 +294,9 @@ async function createPdf(fullName, fullInfo, amount) {
 
 
         // const browser = await puppeteer.launch();
-        // const browser = await puppeteer.launch({
-        //     executablePath: '/opt/render/.cache/puppeteer/chrome',
-        // });
+        const browser = await puppeteer.launch({
+            executablePath: '/opt/render/.cache/puppeteer/chrome',
+        });
 
 
         // const browser = await puppeteer.launch({
@@ -314,10 +314,10 @@ async function createPdf(fullName, fullInfo, amount) {
         //     headless: true,
         // });
 
-        const browser = await puppeteer.launch({
-            headless: true,
-            args: ['--no-sandbox', '--disable-setuid-sandbox']
-        });
+        // const browser = await puppeteer.launch({
+        //     headless: true,
+        //     args: ['--no-sandbox', '--disable-setuid-sandbox']
+        // });
 
         // // Rest of the PDF creation logic
         const page = await browser.newPage();
