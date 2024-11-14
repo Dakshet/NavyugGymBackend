@@ -315,7 +315,6 @@ async function createPdf(fullName, fullInfo, amount) {
         // });
 
         const browser = await puppeteer.launch({
-            executablePath: '/usr/bin/google-chrome-stable',  // The path Render uses for Chrome
             headless: true,
             args: ['--no-sandbox', '--disable-setuid-sandbox']
         });
@@ -349,7 +348,7 @@ async function createPdf(fullName, fullInfo, amount) {
 
 
     } catch (error) {
-        console.log("Error are during pdf creation", error)
+        console.log("PDF creation", error)
     }
 }
 
