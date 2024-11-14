@@ -349,7 +349,7 @@ async function createPdf(fullName, fullInfo, amount) {
 
 
     } catch (error) {
-        console.log(error)
+        console.log("Error are during pdf creation", error)
     }
 }
 
