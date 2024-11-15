@@ -351,7 +351,9 @@ async function createPdf(fullName, fullInfo, amount) {
         // const browser = await puppeteer.launch();
         const browser = await puppeteer.launch({
             // executablePath: '.cache/puppeteer/chromewin64-131.0.6778.69/chrome-win64/chrome.exe',
-            executablePath: '"C:/Program Files/Google/Chrome/Application/chrome.exe"',
+            // executablePath: '"C:/Program Files/Google/Chrome/Application/chrome.exe"',
+            executablePath: "C:/Users/dipti/.cache/puppeteer/chrome/win64-131.0.6778.69chrome-win64/chrome.exe",
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
             headless: true
         });
         const page = await browser.newPage();
@@ -1101,6 +1103,7 @@ async function acceptFeesPayment(req, res) {
 
         const pdfPath = await createPdf(fullName, fullInfo, amount);
         console.log("PDF Path:", pdfPath);
+        console.log("done creatapdg");
 
 
 
@@ -1186,6 +1189,7 @@ async function acceptFeesPayment(req, res) {
                 contentType: "application/pdf"
             },
         ]
+        console.log("done attachments");
 
 
         if (response.status === 200) {
