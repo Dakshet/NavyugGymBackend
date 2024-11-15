@@ -350,7 +350,8 @@ async function createPdf(fullName, fullInfo, amount) {
 
         // const browser = await puppeteer.launch();
         const browser = await puppeteer.launch({
-            executablePath: '.cache/puppeteer/chromewin64-131.0.6778.69/chrome-win64/chrome.exe',
+            // executablePath: '.cache/puppeteer/chromewin64-131.0.6778.69/chrome-win64/chrome.exe',
+            executablePath: '"C:/Program Files/Google/Chrome/Application/chrome.exe"',
             headless: true
         });
         const page = await browser.newPage();
@@ -1114,29 +1115,29 @@ async function acceptFeesPayment(req, res) {
         // }
 
 
-        function findFile(dir, filename) {
-            const files = fs.readdirSync(dir);
-            for (let i = 0; i < files.length; i++) {
-                const currentPath = path.join(dir, files[i]);
-                const stat = fs.statSync(currentPath);
-                if (stat.isFile() && files[i] === filename) {
-                    console.log(`File found at: ${currentPath}`);
-                    return currentPath;
-                } else if (stat.isDirectory()) {
-                    const found = findFile(currentPath, filename);
-                    if (found) return found;
-                }
-            }
-            return null;
-        }
+        // function findFile(dir, filename) {
+        //     const files = fs.readdirSync(dir);
+        //     for (let i = 0; i < files.length; i++) {
+        //         const currentPath = path.join(dir, files[i]);
+        //         const stat = fs.statSync(currentPath);
+        //         if (stat.isFile() && files[i] === filename) {
+        //             console.log(`File found at: ${currentPath}`);
+        //             return currentPath;
+        //         } else if (stat.isDirectory()) {
+        //             const found = findFile(currentPath, filename);
+        //             if (found) return found;
+        //         }
+        //     }
+        //     return null;
+        // }
 
-        // Example usage
-        const receiptPath = findFile('/opt/render/project/src', 'Receipt.pdf');
-        if (receiptPath) {
-            console.log(`Receipt.pdf found at ${receiptPath}`);
-        } else {
-            console.log('Receipt.pdf not found.');
-        }
+        // // Example usage
+        // const receiptPath = findFile('/opt/render/project/src', 'Receipt.pdf');
+        // if (receiptPath) {
+        //     console.log(`Receipt.pdf found at ${receiptPath}`);
+        // } else {
+        //     console.log('Receipt.pdf not found.');
+        // }
 
 
         // Ensure that the directory exists
