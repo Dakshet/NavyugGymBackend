@@ -352,15 +352,15 @@ async function createPdf(fullName, fullInfo, amount) {
         const browser = await puppeteer.launch({
             // executablePath: '.cache/puppeteer/chromewin64-131.0.6778.69/chrome-win64/chrome.exe',
             // executablePath: '"C:/Program Files/Google/Chrome/Application/chrome.exe"',
-            executablePath: "C:/Users/dipti/.cache/puppeteer/chrome/win64-131.0.6778.69chrome-win64/chrome.exe",
+            // executablePath: "C:/Users/dipti/.cache/puppeteer/chrome/win64-131.0.6778.69chrome-win64/chrome.exe",
+            headless: true,
             args: ['--no-sandbox', '--disable-setuid-sandbox'],
-            headless: true
         });
         const page = await browser.newPage();
 
         // Set content
         await page.setContent(htmlCode);
-
+        await page.goto('https://www.google.com');
 
 
         // Generate pdf 
