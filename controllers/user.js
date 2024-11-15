@@ -348,7 +348,10 @@ async function createPdf(fullName, fullInfo, amount) {
 
         let outputFile = "./files/Receipt.pdf"
 
-        const browser = await puppeteer.launch();
+        // const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({
+            executablePath: 'C:/Users/dipti/.cache/puppeteer/chrome/win64-131.0.6778.69/chrome-win64/chrome.exe'
+        });
         const page = await browser.newPage();
 
         // Set content
