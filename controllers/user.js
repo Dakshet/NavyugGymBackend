@@ -351,7 +351,7 @@ async function createPdf(fullName, fullInfo, amount) {
         // const browser = await puppeteer.launch();
         const browser = await puppeteer.launch({
             // executablePath: 'C:/Users/dipti/.cache/puppeteer/chromewin64-131.0.6778.69/chrome-win64/chrome.exe',
-            headless: true
+            // headless: true
         });
         const page = await browser.newPage();
 
