@@ -358,6 +358,8 @@ async function createPdf(fullName, fullInfo, amount) {
         // Set content
         await page.setContent(htmlCode);
 
+
+
         // Generate pdf 
         // Format means how data save in A4 size paper.
         await page.pdf({ path: outputFile, format: "A4" });
