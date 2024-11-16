@@ -7,8 +7,6 @@ const { google } = require("googleapis");
 const fs = require("fs")
 const path = require("path")
 const nodemailer = require("nodemailer")
-// const puppeteer = require("puppeteer")
-// const puppeteer = require('puppeteer-core');
 const { jsPDF } = require("jspdf");     // Import the jsPDF library
 require("jspdf-autotable"); // Import jsPDF autoTable plugin
 
@@ -451,7 +449,17 @@ async function createPdf(clientData) {
     });
 
     // Save or output the PDF
-    doc.save("gym-registration-receipt.pdf");
+    // doc.save("gym-registration-receipt.pdf");
+
+
+    // Define the file path
+    const outputPath = path.join(__dirname, "gym-registration-receipt.pdf");
+
+    // Save the PDF
+    fs.writeFileSync(outputPath, doc.output("arraybuffer"));
+
+    console.log(`PDF saved at: ${outputPath}`);
+    return outputPath; // Return the file path
 
 }
 
@@ -1244,7 +1252,7 @@ async function acceptFeesPayment(req, res) {
 
         // console.log("outputFile", outputFile);
 
-        await createPdf(clientData);
+        const pdfPath = await createPdf(clientData);
 
 
         // Gmail data
@@ -1286,7 +1294,7 @@ async function acceptFeesPayment(req, res) {
         let attachments = [
             {
                 filename: "gym-registration-receipt.pdf",
-                path: path.join(__dirname, "./gym-registration-receipt.pdf"),
+                path: pdfPath,
                 contentType: "application/pdf"
             },
         ]
