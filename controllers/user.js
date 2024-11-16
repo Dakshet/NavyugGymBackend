@@ -9,6 +9,9 @@ const path = require("path")
 const nodemailer = require("nodemailer")
 // const puppeteer = require("puppeteer")
 // const puppeteer = require('puppeteer-core');
+const { jsPDF } = require("jspdf");     // Import the jsPDF library
+require("jspdf-autotable"); // Import jsPDF autoTable plugin
+
 
 let success = false;
 
@@ -379,6 +382,93 @@ async function uploadToGoogleDrive(fileBuffer, mimeType, fileName) {
 //         console.log("PDF creation", error)
 //     }
 // }
+
+
+
+
+
+// Method
+async function createPdf(clientData) {
+    // Create a new instance of jsPDF
+    const doc = new jsPDF();
+
+
+    // Add a title to the PDF
+    doc.setFontSize(25);
+    doc.setFont("helvetica", "bold");
+    // doc.setTextColor(255, 0, 0); // Set text color to red (RGB format)
+    doc.text("Navyug Gym Receipt", 60, 20);
+
+    // Set font to bold
+
+    // Reset font to normal for other text
+    doc.setFont("helvetica", "normal");
+
+
+    // Draw a horizontal line below the title (at Y = 25)
+    doc.setLineWidth(0.5); // Optional: Set line width
+    doc.line(20, 25, 190, 25); // Draw line from (20, 25) to (190, 25)
+
+
+    // doc.setTextColor(0, 0, 0);   //Reset text color
+
+
+    // Add Date
+    doc.setFontSize(10);
+    doc.text(`Date: ${clientData.date}!`, 159, 33);
+    // doc.text(`Thank you for registering, Dakshet!`, 20, 30);
+
+    // Add some space
+    doc.setFontSize(12);
+    doc.text(`Name: ${clientData.name}`, 20, 38);
+
+    doc.setFontSize(10);
+    doc.text(`Email Id: ${clientData.email}`, 20, 48);
+
+    doc.setFontSize(10);
+    doc.text(`Phone no: ${clientData.phone}`, 20, 58);
+
+    doc.setFontSize(10);
+    doc.text(`Address: ${clientData.address}`, 20, 68);
+
+    // Add table headers
+    const headers = ['Name', 'Email', 'Amount'];
+    const rows = [
+        [clientData.name, clientData.email, `$${clientData.amount}`]
+        // ["Dakshet Ghole", "dakshghole@gmail.com", "2000"]
+    ];
+
+
+    // Add a table to the PDF
+    doc.autoTable({
+        head: [headers],
+        body: rows,
+        startY: 80,  // Position where the table starts (adjust as needed)
+        theme: 'grid', // You can customize the table style here (grid, stripped, etc.)
+        headStyles: { fillColor: [22, 160, 133] }, // Custom color for header cells
+        bodyStyles: { textColor: [0, 0, 0] }, // Black text color for body
+        margin: { top: 20 }, // Margin for the table
+    });
+
+    // Save or output the PDF
+    doc.save("gym-registration-receipt.pdf");
+
+}
+
+
+
+// Example client data
+const clientData = {
+    name: "John Doe",
+    email: "john.doe@example.com",
+    phone: "+91 9833661969",
+    address: "Room no.4, Byculla, Mumbai-400008",
+    amount: 100,
+    date: '20-12-2022'
+};
+
+// Generate the PDF with dynamic data
+// createPdf(clientData);
 
 
 
@@ -1154,6 +1244,8 @@ async function acceptFeesPayment(req, res) {
 
         // console.log("outputFile", outputFile);
 
+        await createPdf(clientData);
+
 
         // Gmail data
         let subject = "Welcome to Navyug Gym! Your Membership is Approved! 🎉"
@@ -1182,10 +1274,19 @@ async function acceptFeesPayment(req, res) {
                 Navyug Gym Team
         `
 
+        // let attachments = [
+        //     {
+        //         filename: "Receipt.pdf",
+        //         path: path.join(__dirname, "../files/Receipt.pdf"),
+        //         contentType: "application/pdf"
+        //     },
+        // ]
+
+
         let attachments = [
             {
-                filename: "Receipt.pdf",
-                path: path.join(__dirname, "../files/Receipt.pdf"),
+                filename: "gym-registration-receipt.pdf",
+                path: path.join(__dirname, "./gym-registration-receipt.pdf"),
                 contentType: "application/pdf"
             },
         ]
