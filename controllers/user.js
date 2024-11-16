@@ -422,11 +422,7 @@ async function createPdf(clientData) {
 
     doc.setFontSize(10);
     doc.text(`Email Id: ${clientData.email}`, 20, 48);
-
-    doc.setFontSize(10);
     doc.text(`Phone no: ${clientData.phone}`, 20, 58);
-
-    doc.setFontSize(10);
     doc.text(`Address: ${clientData.address}`, 20, 68);
 
     // Add table headers
@@ -452,11 +448,18 @@ async function createPdf(clientData) {
     // doc.save("gym-registration-receipt.pdf");
 
 
+    // Save or output the PDF
+    const arrayBuffer = doc.output("arraybuffer");
+
+    // Convert ArrayBuffer to Buffer
+    const buffer = Buffer.from(arrayBuffer);
+
+
     // Define the file path
     const outputPath = path.join(__dirname, "gym-registration-receipt.pdf");
 
     // Save the PDF
-    fs.writeFileSync(outputPath, doc.output("arraybuffer"));
+    fs.writeFileSync(outputPath, buffer);
 
     console.log(`PDF saved at: ${outputPath}`);
     return outputPath; // Return the file path
@@ -474,9 +477,6 @@ const clientData = {
     amount: 100,
     date: '20-12-2022'
 };
-
-// Generate the PDF with dynamic data
-// createPdf(clientData);
 
 
 
@@ -1151,6 +1151,16 @@ async function acceptFeesPayment(req, res) {
         let firstName;
         let fullInfo;
 
+        const clientData = {
+            name: "John Doe",
+            email: "john.doe@example.com",
+            phone: "+91 9833661969",
+            address: "Room no.4, Byculla, Mumbai-400008",
+            amount: 100,
+            date: '20-12-2022'
+        };
+
+
 
         //Validate the User
         for (let i = 0; i < adminData.length; i++) {
@@ -1254,6 +1264,15 @@ async function acceptFeesPayment(req, res) {
 
         const pdfPath = await createPdf(clientData);
 
+        // Create attachments
+        let attachments = [
+            {
+                filename: "gym-registration-receipt.pdf",
+                path: pdfPath,
+                contentType: "application/pdf"
+            },
+        ]
+
 
         // Gmail data
         let subject = "Welcome to Navyug Gym! Your Membership is Approved! 🎉"
@@ -1291,22 +1310,13 @@ async function acceptFeesPayment(req, res) {
         // ]
 
 
-        let attachments = [
-            {
-                filename: "gym-registration-receipt.pdf",
-                path: pdfPath,
-                contentType: "application/pdf"
-            },
-        ]
-        console.log("done attachments");
-
 
         if (response.status === 200) {
             await sendMails(fullInfo[1], subject, text, attachments);
+            success = true;
+            return res.status(200).json({ success, Data: "Successfully Add Member" })
         }
 
-        success = true;
-        return res.status(200).json({ success, Data: "Successfully Add Member" })
 
 
     } catch (error) {
