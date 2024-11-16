@@ -198,187 +198,187 @@ async function uploadToGoogleDrive(fileBuffer, mimeType, fileName) {
 
 
 // Create receipt for the user.
-async function createPdf(fullName, fullInfo, amount) {
-    try {
+// async function createPdf(fullName, fullInfo, amount) {
+//     try {
 
-        // Current Date
-        // Add Date
-        const currentDate = new Date();
+//         // Current Date
+//         // Add Date
+//         const currentDate = new Date();
 
-        // Get individual components:
-        const year = currentDate.getFullYear();
-        const month = currentDate.getMonth() + 1; // Months are 0-indexed
-        const day = currentDate.getDate();
+//         // Get individual components:
+//         const year = currentDate.getFullYear();
+//         const month = currentDate.getMonth() + 1; // Months are 0-indexed
+//         const day = currentDate.getDate();
 
-        // Format the date:
-        const formattedDate
-            = `${day.toString().padStart(2, '0')}-${month.toString().padStart(2, '0')}-${year}`;
-
-
-        const htmlCode = `
-      <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <link rel="shortcut icon" type="x-icon"
-        href="https://static.vecteezy.com/system/resources/thumbnails/008/222/655/small_2x/bodybuilding-logo-free-vector.jpg">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navyug Application Receipt</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&display=swap');
-    </style>
-</head>
-
-<body style="margin: 0px; padding: 0px; box-sizing: border-box;">
-
-    <div
-        style="background-color: white; color: black; height: 100vh; width: 100%;  margin: 0px; display: flex;  justify-content: center;">
-        <!-- Here we need to image url after fetching from google drive -->
-        <div style="width: 100%; margin: 0px;   font-size: 25px;">
-            <h1 style="padding: 5px ; 
-                text-align: center; color: red; 
-                font-size: 45px;">
-                Navyug Gym Receipt</h1>
-            <div style="padding: 0 3%;">
-                <hr style="margin-bottom: 30px;">
-                <h6 style="display: inline-block; float: right; margin-top: -10px;">Date: ${formattedDate}</h6>
-                <h4>Name: ${fullName}</h4>
-                <h6>Email Id: ${fullInfo[1]}</h6>
-                <h6>Phone No: +91 ${fullInfo[2]}</h6>
-                <h6>Address: ${fullInfo[3]}</h6>
-                <table style="width: 100%; border-collapse: collapse; font-size: 16px;">
-                    <tr>
-                        <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2; text-align: left;">
-                            Sr No.</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2; text-align: left;">
-                        <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2; text-align: left;">
-                            Work out Type</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2; text-align: left;">
-                            Plan Validity</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2; text-align: left;">
-                            Payment Method</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2; text-align: left;">
-                            Amount</th>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;">1</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">Gym</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">${fullInfo[6]} <span
-                                style="margin-left: 10px;">To</span>
-                            <span style="margin-left: 10px;">${fullInfo[8]}</span>
-                        </td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">Cash</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">${amount}</td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px;"></td>
-                        <td style="border: 1px solid #ddd; padding: 8px;"></td>
-                        <td style="border: 1px solid #ddd; padding: 8px;"></td>
-                        <td style="border: 1px solid #ddd; padding: 8px; text-align: end; padding-right: 20px;">TOTAL
-                        </td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">${amount}</td>
-                    </tr>
-                </table>
-                <h6>Received by: <span style="margin-left: 20px;">Navyug Gym</span></h6>
-                <h6>Received Signature: <span style="margin-left: 20px;"> ____________</span></h6>
-            </div>
-            <hr style="margin-top: 100px;">
-        </div>
-    </div>
-
-</body>
-
-</html>
-      `
+//         // Format the date:
+//         const formattedDate
+//             = `${day.toString().padStart(2, '0')}-${month.toString().padStart(2, '0')}-${year}`;
 
 
-        // const browser = await puppeteer.launch();
-        // const browser = await puppeteer.launch({
-        //     executablePath: '/opt/render/.cache/puppeteer/chrome',
-        // });
+//         const htmlCode = `
+//       <!DOCTYPE html>
+// <html lang="en">
+
+// <head>
+//     <meta charset="UTF-8">
+//     <link rel="shortcut icon" type="x-icon"
+//         href="https://static.vecteezy.com/system/resources/thumbnails/008/222/655/small_2x/bodybuilding-logo-free-vector.jpg">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>Navyug Application Receipt</title>
+//     <style>
+//         @import url('https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&display=swap');
+//     </style>
+// </head>
+
+// <body style="margin: 0px; padding: 0px; box-sizing: border-box;">
+
+//     <div
+//         style="background-color: white; color: black; height: 100vh; width: 100%;  margin: 0px; display: flex;  justify-content: center;">
+//         <!-- Here we need to image url after fetching from google drive -->
+//         <div style="width: 100%; margin: 0px;   font-size: 25px;">
+//             <h1 style="padding: 5px ; 
+//                 text-align: center; color: red; 
+//                 font-size: 45px;">
+//                 Navyug Gym Receipt</h1>
+//             <div style="padding: 0 3%;">
+//                 <hr style="margin-bottom: 30px;">
+//                 <h6 style="display: inline-block; float: right; margin-top: -10px;">Date: ${formattedDate}</h6>
+//                 <h4>Name: ${fullName}</h4>
+//                 <h6>Email Id: ${fullInfo[1]}</h6>
+//                 <h6>Phone No: +91 ${fullInfo[2]}</h6>
+//                 <h6>Address: ${fullInfo[3]}</h6>
+//                 <table style="width: 100%; border-collapse: collapse; font-size: 16px;">
+//                     <tr>
+//                         <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2; text-align: left;">
+//                             Sr No.</th>
+//                         <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2; text-align: left;">
+//                         <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2; text-align: left;">
+//                             Work out Type</th>
+//                         <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2; text-align: left;">
+//                             Plan Validity</th>
+//                         <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2; text-align: left;">
+//                             Payment Method</th>
+//                         <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2; text-align: left;">
+//                             Amount</th>
+//                     </tr>
+//                     <tr>
+//                         <td style="border: 1px solid #ddd; padding: 8px;">1</td>
+//                         <td style="border: 1px solid #ddd; padding: 8px;">Gym</td>
+//                         <td style="border: 1px solid #ddd; padding: 8px;">${fullInfo[6]} <span
+//                                 style="margin-left: 10px;">To</span>
+//                             <span style="margin-left: 10px;">${fullInfo[8]}</span>
+//                         </td>
+//                         <td style="border: 1px solid #ddd; padding: 8px;">Cash</td>
+//                         <td style="border: 1px solid #ddd; padding: 8px;">${amount}</td>
+//                     </tr>
+//                     <tr>
+//                         <td style="border: 1px solid #ddd; padding: 8px;"></td>
+//                         <td style="border: 1px solid #ddd; padding: 8px;"></td>
+//                         <td style="border: 1px solid #ddd; padding: 8px;"></td>
+//                         <td style="border: 1px solid #ddd; padding: 8px; text-align: end; padding-right: 20px;">TOTAL
+//                         </td>
+//                         <td style="border: 1px solid #ddd; padding: 8px;">${amount}</td>
+//                     </tr>
+//                 </table>
+//                 <h6>Received by: <span style="margin-left: 20px;">Navyug Gym</span></h6>
+//                 <h6>Received Signature: <span style="margin-left: 20px;"> ____________</span></h6>
+//             </div>
+//             <hr style="margin-top: 100px;">
+//         </div>
+//     </div>
+
+// </body>
+
+// </html>
+//       `
 
 
-        // const browser = await puppeteer.launch({
-        //     headless: true,
-        // });
-
-        // const browser = await puppeteer.launch({
-        //     headless: true,
-        //     args: ['--no-sandbox', '--disable-setuid-sandbox']
-        // });
-
-        // const browser = await puppeteer.launch({
-        //     executablePath: '/opt/render/.cache/puppeteer/chrome',
-        //     args: ['--no-sandbox', '--disable-setuid-sandbox'],
-        //     headless: true,
-        // });
-
-        // const browser = await puppeteer.launch({
-        //     headless: true,
-        //     args: ['--no-sandbox', '--disable-setuid-sandbox']
-        // });
-
-        // // // Rest of the PDF creation logic
-        // const page = await browser.newPage();
+//         // const browser = await puppeteer.launch();
+//         // const browser = await puppeteer.launch({
+//         //     executablePath: '/opt/render/.cache/puppeteer/chrome',
+//         // });
 
 
-        // // // Set content
-        // // console.log("page content", await page.setContent(htmlCode))   // deelte it.\
-        // await page.setContent(htmlCode);
+//         // const browser = await puppeteer.launch({
+//         //     headless: true,
+//         // });
 
-        // // const defaultPath = puppeteer.executablePath();
-        // // // console.log("Default executable path:", defaultPath);
+//         // const browser = await puppeteer.launch({
+//         //     headless: true,
+//         //     args: ['--no-sandbox', '--disable-setuid-sandbox']
+//         // });
 
+//         // const browser = await puppeteer.launch({
+//         //     executablePath: '/opt/render/.cache/puppeteer/chrome',
+//         //     args: ['--no-sandbox', '--disable-setuid-sandbox'],
+//         //     headless: true,
+//         // });
 
-        // const outputDir = path.join(__dirname, 'files');
-        // if (!fs.existsSync(outputDir)) {
-        //     fs.mkdirSync(outputDir, { recursive: true });
-        // }
+//         // const browser = await puppeteer.launch({
+//         //     headless: true,
+//         //     args: ['--no-sandbox', '--disable-setuid-sandbox']
+//         // });
 
-
-        // const outputFile = path.join(outputDir, 'Receipt.pdf');
-        // await page.pdf({ path: outputFile, format: "A4" });
-
-        // await browser.close();
-
-        // console.log("PDF created at:", outputFile);
-        // return outputFile;
-
-
-        let outputFile = "./files/Receipt.pdf"
-
-        // const browser = await puppeteer.launch();
-        const browser = await puppeteer.launch({
-            // executablePath: '.cache/puppeteer/chromewin64-131.0.6778.69/chrome-win64/chrome.exe',
-            // executablePath: '"C:/Program Files/Google/Chrome/Application/chrome.exe"',
-            // executablePath: "C:/Users/dipti/.cache/puppeteer/chrome/win64-131.0.6778.69chrome-win64/chrome.exe",
-            headless: true,
-            args: ['--no-sandbox', '--disable-setuid-sandbox'],
-        });
-        const page = await browser.newPage();
-
-        // Set content
-        await page.setContent(htmlCode);
-        await page.goto('https://www.google.com');
+//         // // // Rest of the PDF creation logic
+//         // const page = await browser.newPage();
 
 
-        // Generate pdf 
-        // Format means how data save in A4 size paper.
-        await page.pdf({ path: outputFile, format: "A4" });
+//         // // // Set content
+//         // // console.log("page content", await page.setContent(htmlCode))   // deelte it.\
+//         // await page.setContent(htmlCode);
 
-        await browser.close();
-
-        console.log("pdf created")
-
-        return "PDF created successfully!"
+//         // // const defaultPath = puppeteer.executablePath();
+//         // // // console.log("Default executable path:", defaultPath);
 
 
+//         // const outputDir = path.join(__dirname, 'files');
+//         // if (!fs.existsSync(outputDir)) {
+//         //     fs.mkdirSync(outputDir, { recursive: true });
+//         // }
 
-    } catch (error) {
-        console.log("PDF creation", error)
-    }
-}
+
+//         // const outputFile = path.join(outputDir, 'Receipt.pdf');
+//         // await page.pdf({ path: outputFile, format: "A4" });
+
+//         // await browser.close();
+
+//         // console.log("PDF created at:", outputFile);
+//         // return outputFile;
+
+
+//         let outputFile = "./files/Receipt.pdf"
+
+//         // const browser = await puppeteer.launch();
+//         const browser = await puppeteer.launch({
+//             // executablePath: '.cache/puppeteer/chromewin64-131.0.6778.69/chrome-win64/chrome.exe',
+//             // executablePath: '"C:/Program Files/Google/Chrome/Application/chrome.exe"',
+//             // executablePath: "C:/Users/dipti/.cache/puppeteer/chrome/win64-131.0.6778.69chrome-win64/chrome.exe",
+//             headless: true,
+//             args: ['--no-sandbox', '--disable-setuid-sandbox'],
+//         });
+//         const page = await browser.newPage();
+
+//         // Set content
+//         await page.setContent(htmlCode);
+//         await page.goto('https://www.google.com');
+
+
+//         // Generate pdf 
+//         // Format means how data save in A4 size paper.
+//         await page.pdf({ path: outputFile, format: "A4" });
+
+//         await browser.close();
+
+//         console.log("pdf created")
+
+//         return "PDF created successfully!"
+
+
+
+//     } catch (error) {
+//         console.log("PDF creation", error)
+//     }
+// }
 
 
 
@@ -1101,9 +1101,9 @@ async function acceptFeesPayment(req, res) {
         // Full Name and meta data send to the pdf method.
         // await createPdf(fullName, fullInfo, amount); 
 
-        const pdfPath = await createPdf(fullName, fullInfo, amount);
-        console.log("PDF Path:", pdfPath);
-        console.log("done creatapdg");
+        // const pdfPath = await createPdf(fullName, fullInfo, amount);
+        // console.log("PDF Path:", pdfPath);
+        // console.log("done creatapdg");
 
 
 
