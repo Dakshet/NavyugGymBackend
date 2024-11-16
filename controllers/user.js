@@ -429,17 +429,17 @@ async function createPdf(fullName, fullInfo, amount) {
 
     // Add Date
     doc.setFontSize(10);
-    doc.text(`Date: ${formattedDate}!`, 159, 33);
+    doc.text(`Date: ${formattedDate}`, 159, 33);
     // doc.text(`Thank you for registering, Dakshet!`, 20, 30);
 
     // Add some space
     doc.setFontSize(12);
-    doc.text(`Name: ${fullName}`, 20, 38);
+    doc.text(`Name: ${fullName}`, 20, 43);
 
     doc.setFontSize(10);
-    doc.text(`Email Id: ${fullInfo[1]}`, 20, 48);
-    doc.text(`Phone no: ${fullInfo[2]}`, 20, 58);
-    doc.text(`Address: ${fullInfo[3]}`, 20, 68);
+    doc.text(`Email Id: ${fullInfo[1]}`, 20, 53);
+    doc.text(`Phone no: ${fullInfo[2]}`, 20, 63);
+    doc.text(`Address: ${fullInfo[3]}`, 20, 73);
 
     // Add table headers
     // const headers = ['Name', 'Email', 'Amount'];
@@ -448,17 +448,37 @@ async function createPdf(fullName, fullInfo, amount) {
     //     // ["Dakshet Ghole", "dakshghole@gmail.com", "2000"]
     // ];
 
+    // Add table headers
+    const headers = ['    Sr No.', '    Workout Type', '                 Plan Validity', '   Payment Method', ' Amount'];
+    const rows = [
+        ["       1", "           Gym", `    ${fullInfo[6]}    To    ${fullInfo[8]}`, "              Cash", `    ${fullInfo[14]}`],
+        ["", "", "", "              Total", `    ${fullInfo[14]}`]
+        // ["Dakshet Ghole", "dakshghole@gmail.com", "2000"]
+    ];
 
-    // // Add a table to the PDF
-    // doc.autoTable({
-    //     head: [headers],
-    //     body: rows,
-    //     startY: 80,  // Position where the table starts (adjust as needed)
-    //     theme: 'grid', // You can customize the table style here (grid, stripped, etc.)
-    //     headStyles: { fillColor: [22, 160, 133] }, // Custom color for header cells
-    //     bodyStyles: { textColor: [0, 0, 0] }, // Black text color for body
-    //     margin: { top: 20 }, // Margin for the table
-    // });
+
+    // Add a table to the PDF
+    doc.autoTable({
+        head: [headers],
+        body: rows,
+        startY: 83,  // Position where the table starts (adjust as needed)
+        theme: 'grid', // You can customize the table style here (grid, stripped, etc.)
+        headStyles: { fillColor: [22, 160, 133] }, // Custom color for header cells
+        bodyStyles: { textColor: [0, 0, 0] }, // Black text color for body
+        margin: { top: 20, left: 20 }, // Margin for the table
+        tableWidth: 166,
+        // columnStyles: {
+        //     0: { cellWidth: 40 }, // Set width for the first column
+        //     1: { cellWidth: 40 }, // Set width for the second column
+        //     2: { cellWidth: 20 }, // Set width for the third column
+        // },
+        gridLineColor: [0, 0, 0], // Set the grid line color to dark black (RGB: [0, 0, 0])
+    });
+
+
+    doc.setFontSize(10);
+    doc.text(`Received by:     Navyug Gym`, 20, 118);
+    doc.text(`Received Signature:  ______________`, 20, 128);
 
     // Save or output the PDF
     // doc.save("gym-registration-receipt.pdf");
