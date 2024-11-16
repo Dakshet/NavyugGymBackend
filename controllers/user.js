@@ -446,7 +446,9 @@ async function createPdf(clientData) {
 
     // Save or output the PDF
     // doc.save("gym-registration-receipt.pdf");
-
+    const tempDir = os.tmpdir(); // Get temporary directory
+    // Define the file path
+    const outputPath = path.join(tempDir, "gym-registration-receipt.pdf");
 
     // Save or output the PDF
     const arrayBuffer = doc.output("arraybuffer");
@@ -455,8 +457,6 @@ async function createPdf(clientData) {
     const buffer = Buffer.from(arrayBuffer);
 
 
-    // Define the file path
-    const outputPath = path.join(__dirname, "gym-registration-receipt.pdf");
 
     // Save the PDF
     fs.writeFileSync(outputPath, buffer);
