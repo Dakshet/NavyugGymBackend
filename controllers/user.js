@@ -438,7 +438,7 @@ async function createPdf(fullName, fullInfo, amount) {
 
     doc.setFontSize(10);
     doc.text(`Email Id: ${fullInfo[1]}`, 20, 53);
-    doc.text(`Phone no: ${fullInfo[2]}`, 20, 63);
+    doc.text(`Phone no: +91 ${fullInfo[2]}`, 20, 63);
     doc.text(`Address: ${fullInfo[3]}`, 20, 73);
 
     // Add table headers
@@ -503,16 +503,6 @@ async function createPdf(fullName, fullInfo, amount) {
 }
 
 
-
-// Example client data
-const clientData = {
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone: "+91 9833661969",
-    address: "Room no.4, Byculla, Mumbai-400008",
-    amount: 100,
-    date: '20-12-2022'
-};
 
 
 
@@ -1186,15 +1176,6 @@ async function acceptFeesPayment(req, res) {
         let userName;
         let firstName;
         let fullInfo;
-
-        const clientData = {
-            name: "John Doe",
-            email: "john.doe@example.com",
-            phone: "+91 9833661969",
-            address: "Room no.4, Byculla, Mumbai-400008",
-            amount: 100,
-            date: '20-12-2022'
-        };
 
 
 
