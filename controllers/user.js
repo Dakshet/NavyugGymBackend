@@ -1322,7 +1322,7 @@ async function acceptFeesPayment(req, res) {
     } catch (error) {
         console.log(error.message);
         success = false;
-        return res.json(500).json({ success, Error: "Internal Serval Error Occured!" })
+        return res.status(500).json({ success, Error: "Internal Serval Error Occured!" })
     }
 }
 
