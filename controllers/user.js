@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken")
 const JWT_SECURE = process.env.JWT_SECURE;
 const { google } = require("googleapis");
 const fs = require("fs")
+const os = require("os")
 const path = require("path")
 const nodemailer = require("nodemailer")
 const { jsPDF } = require("jspdf");     // Import the jsPDF library
