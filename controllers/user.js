@@ -421,7 +421,7 @@ async function createPdf(fullName, fullInfo, amount) {
 
     // Draw a horizontal line below the title (at Y = 25)
     doc.setLineWidth(0.5); // Optional: Set line width
-    doc.line(20, 25, 190, 25); // Draw line from (20, 25) to (190, 25)
+    doc.line(20, 28, 190, 28); // Draw line from (20, 25) to (190, 25)
 
 
     // doc.setTextColor(0, 0, 0);   //Reset text color
@@ -429,7 +429,7 @@ async function createPdf(fullName, fullInfo, amount) {
 
     // Add Date
     doc.setFontSize(10);
-    doc.text(`Date: ${formattedDate}`, 159, 33);
+    doc.text(`Date: ${formattedDate}`, 159, 37);
     // doc.text(`Thank you for registering, Dakshet!`, 20, 30);
 
     // Add some space
@@ -451,8 +451,8 @@ async function createPdf(fullName, fullInfo, amount) {
     // Add table headers
     const headers = ['    Sr No.', '    Workout Type', '                 Plan Validity', '   Payment Method', ' Amount'];
     const rows = [
-        ["       1", "           Gym", `    ${fullInfo[6]}    To    ${fullInfo[8]}`, "              Cash", `    ${fullInfo[14]}`],
-        ["", "", "", "              Total", `    ${fullInfo[14]}`]
+        ["       1", "           Gym", `    ${fullInfo[6]}    To    ${fullInfo[8]}`, "              Cash", `    ${amount}`],
+        ["", "", "", "              Total", `    ${amount}`]
         // ["Dakshet Ghole", "dakshghole@gmail.com", "2000"]
     ];
 
@@ -463,7 +463,7 @@ async function createPdf(fullName, fullInfo, amount) {
         body: rows,
         startY: 83,  // Position where the table starts (adjust as needed)
         theme: 'grid', // You can customize the table style here (grid, stripped, etc.)
-        headStyles: { fillColor: [22, 160, 133] }, // Custom color for header cells
+        headStyles: { fillColor: [192, 192, 192] }, // Custom color for header cells
         bodyStyles: { textColor: [0, 0, 0] }, // Black text color for body
         margin: { top: 20, left: 20 }, // Margin for the table
         tableWidth: 166,
