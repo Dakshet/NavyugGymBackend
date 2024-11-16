@@ -7,7 +7,7 @@ const { google } = require("googleapis");
 const fs = require("fs")
 const path = require("path")
 const nodemailer = require("nodemailer")
-const puppeteer = require("puppeteer")
+// const puppeteer = require("puppeteer")
 // const puppeteer = require('puppeteer-core');
 
 let success = false;
