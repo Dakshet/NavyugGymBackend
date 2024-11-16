@@ -387,9 +387,24 @@ async function uploadToGoogleDrive(fileBuffer, mimeType, fileName) {
 
 
 // Method
-async function createPdf(clientData) {
+async function createPdf(fullName, fullInfo, amount) {
     // Create a new instance of jsPDF
     const doc = new jsPDF();
+
+    // Current Date
+    // Add Date
+    const currentDate = new Date();
+
+    // Get individual components:
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1; // Months are 0-indexed
+    const day = currentDate.getDate();
+
+    // Format the date:
+    const formattedDate
+        = `${day.toString().padStart(2, '0')}-${month.toString().padStart(2, '0')}-${year}`;
+
+
 
 
     // Add a title to the PDF
@@ -414,36 +429,36 @@ async function createPdf(clientData) {
 
     // Add Date
     doc.setFontSize(10);
-    doc.text(`Date: ${clientData.date}!`, 159, 33);
+    doc.text(`Date: ${formattedDate}!`, 159, 33);
     // doc.text(`Thank you for registering, Dakshet!`, 20, 30);
 
     // Add some space
     doc.setFontSize(12);
-    doc.text(`Name: ${clientData.name}`, 20, 38);
+    doc.text(`Name: ${fullName}`, 20, 38);
 
     doc.setFontSize(10);
-    doc.text(`Email Id: ${clientData.email}`, 20, 48);
-    doc.text(`Phone no: ${clientData.phone}`, 20, 58);
-    doc.text(`Address: ${clientData.address}`, 20, 68);
+    doc.text(`Email Id: ${fullInfo[1]}`, 20, 48);
+    doc.text(`Phone no: ${fullInfo[2]}`, 20, 58);
+    doc.text(`Address: ${fullInfo[3]}`, 20, 68);
 
     // Add table headers
-    const headers = ['Name', 'Email', 'Amount'];
-    const rows = [
-        [clientData.name, clientData.email, `$${clientData.amount}`]
-        // ["Dakshet Ghole", "dakshghole@gmail.com", "2000"]
-    ];
+    // const headers = ['Name', 'Email', 'Amount'];
+    // const rows = [
+    //     [clientData.name, clientData.email, `$${clientData.amount}`]
+    //     // ["Dakshet Ghole", "dakshghole@gmail.com", "2000"]
+    // ];
 
 
-    // Add a table to the PDF
-    doc.autoTable({
-        head: [headers],
-        body: rows,
-        startY: 80,  // Position where the table starts (adjust as needed)
-        theme: 'grid', // You can customize the table style here (grid, stripped, etc.)
-        headStyles: { fillColor: [22, 160, 133] }, // Custom color for header cells
-        bodyStyles: { textColor: [0, 0, 0] }, // Black text color for body
-        margin: { top: 20 }, // Margin for the table
-    });
+    // // Add a table to the PDF
+    // doc.autoTable({
+    //     head: [headers],
+    //     body: rows,
+    //     startY: 80,  // Position where the table starts (adjust as needed)
+    //     theme: 'grid', // You can customize the table style here (grid, stripped, etc.)
+    //     headStyles: { fillColor: [22, 160, 133] }, // Custom color for header cells
+    //     bodyStyles: { textColor: [0, 0, 0] }, // Black text color for body
+    //     margin: { top: 20 }, // Margin for the table
+    // });
 
     // Save or output the PDF
     // doc.save("gym-registration-receipt.pdf");
@@ -1263,7 +1278,8 @@ async function acceptFeesPayment(req, res) {
 
         // console.log("outputFile", outputFile);
 
-        const pdfPath = await createPdf(clientData);
+
+        const pdfPath = await createPdf(fullName, fullInfo, amount);
 
         // Create attachments
         let attachments = [
