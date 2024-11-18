@@ -11,7 +11,6 @@ const nodemailer = require("nodemailer")
 const { jsPDF } = require("jspdf");     // Import the jsPDF library
 require("jspdf-autotable"); // Import jsPDF autoTable plugin
 
-
 let success = false;
 
 
@@ -185,7 +184,7 @@ async function uploadToGoogleDrive(fileBuffer, mimeType, fileName) {
     const response = await drive.files.create({
         resource: {
             name: fileName,
-            parents: ['1CeahbvW4dl-X85RYl9BH3ocLAvg3C-DR']  // Optional: specify a destination folder
+            parents: ['1HpJ-NI-rzT_HfDStxYcFeh-fTsePfTO5']  // Optional: specify a destination folder
         },
         media: {
             mimeType: mimeType,
@@ -196,193 +195,6 @@ async function uploadToGoogleDrive(fileBuffer, mimeType, fileName) {
 
     return response.data;
 }
-
-
-
-// Create receipt for the user.
-// async function createPdf(fullName, fullInfo, amount) {
-//     try {
-
-//         // Current Date
-//         // Add Date
-//         const currentDate = new Date();
-
-//         // Get individual components:
-//         const year = currentDate.getFullYear();
-//         const month = currentDate.getMonth() + 1; // Months are 0-indexed
-//         const day = currentDate.getDate();
-
-//         // Format the date:
-//         const formattedDate
-//             = `${day.toString().padStart(2, '0')}-${month.toString().padStart(2, '0')}-${year}`;
-
-
-//         const htmlCode = `
-//       <!DOCTYPE html>
-// <html lang="en">
-
-// <head>
-//     <meta charset="UTF-8">
-//     <link rel="shortcut icon" type="x-icon"
-//         href="https://static.vecteezy.com/system/resources/thumbnails/008/222/655/small_2x/bodybuilding-logo-free-vector.jpg">
-//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-//     <title>Navyug Application Receipt</title>
-//     <style>
-//         @import url('https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&display=swap');
-//     </style>
-// </head>
-
-// <body style="margin: 0px; padding: 0px; box-sizing: border-box;">
-
-//     <div
-//         style="background-color: white; color: black; height: 100vh; width: 100%;  margin: 0px; display: flex;  justify-content: center;">
-//         <!-- Here we need to image url after fetching from google drive -->
-//         <div style="width: 100%; margin: 0px;   font-size: 25px;">
-//             <h1 style="padding: 5px ; 
-//                 text-align: center; color: red; 
-//                 font-size: 45px;">
-//                 Navyug Gym Receipt</h1>
-//             <div style="padding: 0 3%;">
-//                 <hr style="margin-bottom: 30px;">
-//                 <h6 style="display: inline-block; float: right; margin-top: -10px;">Date: ${formattedDate}</h6>
-//                 <h4>Name: ${fullName}</h4>
-//                 <h6>Email Id: ${fullInfo[1]}</h6>
-//                 <h6>Phone No: +91 ${fullInfo[2]}</h6>
-//                 <h6>Address: ${fullInfo[3]}</h6>
-//                 <table style="width: 100%; border-collapse: collapse; font-size: 16px;">
-//                     <tr>
-//                         <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2; text-align: left;">
-//                             Sr No.</th>
-//                         <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2; text-align: left;">
-//                         <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2; text-align: left;">
-//                             Work out Type</th>
-//                         <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2; text-align: left;">
-//                             Plan Validity</th>
-//                         <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2; text-align: left;">
-//                             Payment Method</th>
-//                         <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2; text-align: left;">
-//                             Amount</th>
-//                     </tr>
-//                     <tr>
-//                         <td style="border: 1px solid #ddd; padding: 8px;">1</td>
-//                         <td style="border: 1px solid #ddd; padding: 8px;">Gym</td>
-//                         <td style="border: 1px solid #ddd; padding: 8px;">${fullInfo[6]} <span
-//                                 style="margin-left: 10px;">To</span>
-//                             <span style="margin-left: 10px;">${fullInfo[8]}</span>
-//                         </td>
-//                         <td style="border: 1px solid #ddd; padding: 8px;">Cash</td>
-//                         <td style="border: 1px solid #ddd; padding: 8px;">${amount}</td>
-//                     </tr>
-//                     <tr>
-//                         <td style="border: 1px solid #ddd; padding: 8px;"></td>
-//                         <td style="border: 1px solid #ddd; padding: 8px;"></td>
-//                         <td style="border: 1px solid #ddd; padding: 8px;"></td>
-//                         <td style="border: 1px solid #ddd; padding: 8px; text-align: end; padding-right: 20px;">TOTAL
-//                         </td>
-//                         <td style="border: 1px solid #ddd; padding: 8px;">${amount}</td>
-//                     </tr>
-//                 </table>
-//                 <h6>Received by: <span style="margin-left: 20px;">Navyug Gym</span></h6>
-//                 <h6>Received Signature: <span style="margin-left: 20px;"> ____________</span></h6>
-//             </div>
-//             <hr style="margin-top: 100px;">
-//         </div>
-//     </div>
-
-// </body>
-
-// </html>
-//       `
-
-
-//         // const browser = await puppeteer.launch();
-//         // const browser = await puppeteer.launch({
-//         //     executablePath: '/opt/render/.cache/puppeteer/chrome',
-//         // });
-
-
-//         // const browser = await puppeteer.launch({
-//         //     headless: true,
-//         // });
-
-//         // const browser = await puppeteer.launch({
-//         //     headless: true,
-//         //     args: ['--no-sandbox', '--disable-setuid-sandbox']
-//         // });
-
-//         // const browser = await puppeteer.launch({
-//         //     executablePath: '/opt/render/.cache/puppeteer/chrome',
-//         //     args: ['--no-sandbox', '--disable-setuid-sandbox'],
-//         //     headless: true,
-//         // });
-
-//         // const browser = await puppeteer.launch({
-//         //     headless: true,
-//         //     args: ['--no-sandbox', '--disable-setuid-sandbox']
-//         // });
-
-//         // // // Rest of the PDF creation logic
-//         // const page = await browser.newPage();
-
-
-//         // // // Set content
-//         // // console.log("page content", await page.setContent(htmlCode))   // deelte it.\
-//         // await page.setContent(htmlCode);
-
-//         // // const defaultPath = puppeteer.executablePath();
-//         // // // console.log("Default executable path:", defaultPath);
-
-
-//         // const outputDir = path.join(__dirname, 'files');
-//         // if (!fs.existsSync(outputDir)) {
-//         //     fs.mkdirSync(outputDir, { recursive: true });
-//         // }
-
-
-//         // const outputFile = path.join(outputDir, 'Receipt.pdf');
-//         // await page.pdf({ path: outputFile, format: "A4" });
-
-//         // await browser.close();
-
-//         // console.log("PDF created at:", outputFile);
-//         // return outputFile;
-
-
-//         let outputFile = "./files/Receipt.pdf"
-
-//         // const browser = await puppeteer.launch();
-//         const browser = await puppeteer.launch({
-//             // executablePath: '.cache/puppeteer/chromewin64-131.0.6778.69/chrome-win64/chrome.exe',
-//             // executablePath: '"C:/Program Files/Google/Chrome/Application/chrome.exe"',
-//             // executablePath: "C:/Users/dipti/.cache/puppeteer/chrome/win64-131.0.6778.69chrome-win64/chrome.exe",
-//             headless: true,
-//             args: ['--no-sandbox', '--disable-setuid-sandbox'],
-//         });
-//         const page = await browser.newPage();
-
-//         // Set content
-//         await page.setContent(htmlCode);
-//         await page.goto('https://www.google.com');
-
-
-//         // Generate pdf 
-//         // Format means how data save in A4 size paper.
-//         await page.pdf({ path: outputFile, format: "A4" });
-
-//         await browser.close();
-
-//         console.log("pdf created")
-
-//         return "PDF created successfully!"
-
-
-
-//     } catch (error) {
-//         console.log("PDF creation", error)
-//     }
-// }
-
-
 
 
 
@@ -406,6 +218,9 @@ async function createPdf(fullName, fullInfo, amount) {
 
 
 
+    // Add since
+    doc.setFontSize(8);
+    doc.text(`(since 1954)`, 150, 20);
 
     // Add a title to the PDF
     doc.setFontSize(25);
@@ -451,7 +266,7 @@ async function createPdf(fullName, fullInfo, amount) {
     // Add table headers
     const headers = ['    Sr No.', '    Workout Type', '                 Plan Validity', '   Payment Method', ' Amount'];
     const rows = [
-        ["       1", "           Gym", `    ${fullInfo[6]}    To    ${fullInfo[8]}`, "              Cash", `    ${amount}`],
+        ["       1", "           Gym", `    ${fullInfo[5]}    To    ${fullInfo[6]}`, "              Cash", `    ${amount}`],
         ["", "", "", "              Total", `    ${amount}`]
         // ["Dakshet Ghole", "dakshghole@gmail.com", "2000"]
     ];
@@ -504,9 +319,6 @@ async function createPdf(fullName, fullInfo, amount) {
 
 
 
-
-
-
 // Fetch All Data from sheet 1
 async function sendMails(email, subject, text, attachments) {
     try {
@@ -528,7 +340,7 @@ async function sendMails(email, subject, text, attachments) {
         const info = await transporter.sendMail({
             from: {
                 name: "Navyug Gym",
-                address: "process.env.USER"
+                address: process.env.USER,
             }, // sender address
             // to: "bar@example.com, baz@example.com", // When we have list of receivers and here add gym mail account and our gym account.
             to: "dakshsgholedt2000@gmail.com",
@@ -558,7 +370,7 @@ async function fetchData() {
 
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId,
-            range: "Sheet1"
+            range: "UserData"
         })
 
         const data = await response.data.values.slice(1);
@@ -580,7 +392,7 @@ async function fetchAdminData() {
 
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId,
-            range: "Sheet2"
+            range: "AdminData"
         })
 
         const data = await response.data.values.slice(1);
@@ -621,9 +433,11 @@ async function createUser(req, res) {
 
         // Upload to Google Drive directly using stream
         const file = req.file;
+
+
         const driveResponse = await uploadToGoogleDrive(file.buffer, file.mimetype, `${email}.jpg`);
 
-        const imageLinkShree = driveResponse.webViewLink;
+        // const imageLinkShree = driveResponse.webViewLink;
         const copyImageId = driveResponse.id;
 
 
@@ -649,33 +463,12 @@ async function createUser(req, res) {
         const afterOneYearDate = `${afterDay.toString().padStart(2, '0')}-${afterMonth.toString().padStart(2, '0')}-${afterYear}`;
 
 
-        // Before 5 Days
-        const oneYearLater = new Date(currentDate);
-        oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
-        oneYearLater.setDate(oneYearLater.getDate() - 5);
-        const beforeFiveDaysInYear = oneYearLater.getFullYear();
-        const beforeFiveDaysInMonth = oneYearLater.getMonth() + 1; // Months are 0-indexed
-        const beforeFiveDaysInDay = oneYearLater.getDate();
-        const beforeFiveDaysInDate = `${beforeFiveDaysInDay.toString().padStart(2, '0')}-${beforeFiveDaysInMonth.toString().padStart(2, '0')}-${beforeFiveDaysInYear}`;
-
-
-
-        // After 5 Days
-        const oneYearLaterFive = new Date(currentDate);
-        oneYearLaterFive.setFullYear(oneYearLaterFive.getFullYear() + 1);
-        oneYearLaterFive.setDate(oneYearLaterFive.getDate() + 5);
-        const afterFiveDaysInYear = oneYearLaterFive.getFullYear();
-        const afterFiveDaysInMonth = oneYearLaterFive.getMonth() + 1; // Months are 0-indexed
-        const afterFiveDaysInDay = oneYearLaterFive.getDate();
-        const afterFiveDaysInDate = `${afterFiveDaysInDay.toString().padStart(2, '0')}-${afterFiveDaysInMonth.toString().padStart(2, '0')}-${afterFiveDaysInYear}`;
-
-
         // Checking empty rows
         let emptyIndex = 0;
 
         for (let i = 0; i < data.length; i++) {
             if (data[i].length === 0) {
-                emptyIndex = i;
+                emptyIndex = i + 1;
                 break;
             }
         }
@@ -688,11 +481,12 @@ async function createUser(req, res) {
 
         //Store user data in the database
         if (emptyIndex !== 0) {
+            emptyIndex -= 1;
             response = await sheets.spreadsheets.values.update({
                 spreadsheetId,
-                range: `Sheet1!A${emptyIndex + 2}`,
+                range: `UserData!A${emptyIndex + 2}`,
                 valueInputOption: "USER_ENTERED",
-                resource: { values: [[fullName, email, mobileNo, address, imageLinkShree, copyImageId, formattedDate, beforeFiveDaysInDate, afterOneYearDate, dOB, age, bloodGroup, workoutTime, "No", "", "", afterFiveDaysInDate]] }
+                resource: { values: [[fullName, email, mobileNo, address, copyImageId, formattedDate, afterOneYearDate, dOB, age, bloodGroup, workoutTime, "No", "", "", "No", "No"]] }
             })
         }
 
@@ -700,9 +494,9 @@ async function createUser(req, res) {
             response = await sheets.spreadsheets.values.append({
                 auth,
                 spreadsheetId,
-                range: "Sheet1",  //Specify the start cell
+                range: "UserData",  //Specify the start cell
                 valueInputOption: "USER_ENTERED",
-                resource: { values: [[fullName, email, mobileNo, address, imageLinkShree, copyImageId, formattedDate, beforeFiveDaysInDate, afterOneYearDate, dOB, age, bloodGroup, workoutTime, "No", "", "", afterFiveDaysInDate]] }
+                resource: { values: [[fullName, email, mobileNo, address, copyImageId, formattedDate, afterOneYearDate, dOB, age, bloodGroup, workoutTime, "No", "", "", "No", "No"]] }
             })
         }
 
@@ -793,62 +587,29 @@ async function loginAdmin(req, res) {
 async function fetchFeesPendingData(req, res) {
     try {
 
-        const userId = req.user.id;
-
         let dataArray = [];
         let data = await fetchData();
-        let adminData = await fetchAdminData();
-        let isAdminVerify = false;
 
 
-        //Validate the User
-        for (let i = 0; i < adminData.length; i++) {
+        for (let j = 0; j < data.length; j++) {
 
-            // Admin Verification
-            if (adminData[i][2] === userId) {
-
-                isAdminVerify = true;
-                break;
+            if (data[j][11] === "No") {
+                // console.log(data[j])
+                dataArray.push(data[j]);
             }
         }
 
-
-        if (isAdminVerify) {
-            for (let j = 0; j < data.length; j++) {
-
-                // console.log(`Data number is ${j} --> ${data[j]}`);
-
-                if (data[j][13] === "No") {
-                    // console.log(data[j])
-                    dataArray.push(data[j]);
-                }
-            }
-
-            // Sort in ascending order (oldest first)
-            // data.sort((a, b) => {
-            //     const dateA = new Date(a[9].split('-').reverse().join('-'));
-            //     const dateB = new Date(b[9].split('-').reverse().join('-'));
-            //     return dateA - dateB;
-            //   });
+        // Sort in descending order (youngest first)
+        dataArray.sort((a, b) => {
+            const dateA = new Date(a[5].split('-').reverse().join('-'));
+            const dateB = new Date(b[5].split('-').reverse().join('-'));
+            return dateB - dateA;
+        });
 
 
-            // Sort in descending order (youngest first)
-            dataArray.sort((a, b) => {
-                const dateA = new Date(a[7].split('-').reverse().join('-'));
-                const dateB = new Date(b[7].split('-').reverse().join('-'));
-                return dateB - dateA;
-            });
+        success = true;
+        return res.status(200).json({ success, Data: dataArray })
 
-
-            success = true;
-            return res.status(200).json({ success, Data: dataArray })
-
-        }
-        else {
-            isAdminVerify = false;
-            success = false;
-            return res.status(400).json({ success, Error: "Admin not found!" })
-        }
 
 
     } catch (error) {
@@ -864,58 +625,32 @@ async function fetchFeesPendingData(req, res) {
 async function searchUser(req, res) {
     try {
 
-        const userId = req.user.id;
-
         const name = req.query.name;  //It is also accept name, surname and mobile number
 
         let fullName = name.toLowerCase();
-
-
         let dataArray = [];
         let data = await fetchData();
-        let adminData = await fetchAdminData();
-        let adminVerify = false;
 
 
-        //Validate the User
-        for (let i = 0; i < adminData.length; i++) {
+        for (let j = 0; j < data.length; j++) {
 
-            // Admin Verification
-            if (adminData[i][2] === userId) {
-
-                adminVerify = true;
-                break;
-            }
-        }
-
-        if (adminVerify) {
-            for (let j = 0; j < data.length; j++) {
-
-                if (data[j].length !== 0) {
-                    let firstName = data[j][0].split(" ");
-                    if (firstName[0] === fullName || firstName[1] === fullName || data[j][2] === fullName) {
-                        dataArray.push(data[j]);
-                    }
+            if (data[j].length !== 0) {
+                let firstName = data[j][0].split(" ");
+                if (firstName[0] === fullName || firstName[1] === fullName || data[j][2] === fullName) {
+                    dataArray.push(data[j]);
                 }
             }
+        }
 
-            if (dataArray.length !== 0) {
-                success = true;
-                return res.status(200).json({ success, Data: dataArray })
-            }
-            else {
-                success = true;
-                return res.status(200).json({ success, Data: "User is not found!" })
-
-            }
-
+        if (dataArray.length !== 0) {
+            success = true;
+            return res.status(200).json({ success, Data: dataArray })
         }
         else {
-            adminVerify = false;
-            success = false;
-            return res.status(400).json({ success, Error: "Admin not found!" })
-        }
+            success = true;
+            return res.status(200).json({ success, Data: "User is not found!" })
 
+        }
 
     } catch (error) {
         console.log(error.message);
@@ -923,8 +658,7 @@ async function searchUser(req, res) {
         return res.json(500).json({ success, Error: "Internal Serval Error Occured!" })
     }
 }
-let prevCounter = 0;     // Counter for send email before 5 Days
-let endCounter = 0;      // Counter for send email when subscription end.
+
 
 // Fetch data those are between before 5 days and end date 
 async function feesDeadlineData(req, res) {
@@ -938,64 +672,74 @@ async function feesDeadlineData(req, res) {
         const month = currentDate.getMonth() + 1; // Months are 0-indexed
         const day = currentDate.getDate();
 
-        // Format the date:
-        const formattedDate
-            = `${day.toString().padStart(2, '0')}-${month.toString().padStart(2, '0')}-${year}`;
-
 
         // Fetch Data
         let data = await fetchData();
         let deadlineUserData = [];
         let firstName;
+        const sheets = await accessGoogleSheet();
+        let response;
 
 
         for (let item = 0; item < data.length; item++) {
 
-            let previousDeadlineDate = data[item][7];
-            const [startDay, startMonth, startYear] = previousDeadlineDate.split("-");
-            previousDeadlineDate = new Date(`${startYear}, ${startMonth}- ${startDay}`)
+            if (data[item].length !== 0) {
 
-            let endDeadlineDate = data[item][8];
-            const [endDay, endMonth, endYear] = endDeadlineDate.split("-");
-            endDeadlineDate = new Date(`${endYear}, ${endMonth}- ${endDay}`)
+                let endDeadlineDate = data[item][6];
+                const [endDay, endMonth, endYear] = endDeadlineDate.split("-").map(Number);
 
-            const [currentDay, currentMonth, currentYear] = formattedDate.split("-");
-            let currentDate = new Date(`${currentYear}, ${currentMonth}- ${currentDay}`)
+                endDeadlineDate = new Date(endYear, endMonth - 1, endDay)
 
-            // if (previousDeadlineDate < currentDate && currentDate <= endDeadlineDate) {
-            //     deadlineUserData.push(data[item]);
-            // }
+                let previousDeadlineDate = new Date(endDeadlineDate);
+                previousDeadlineDate.setDate(endDeadlineDate.getDate() - 5);
 
-            if (
-                previousDeadlineDate.getTime() < currentDate.getTime() &&
-                currentDate.getTime() <= endDeadlineDate.getTime()
-            ) {
-                deadlineUserData.push(data[item]);
-            }
 
-            if (previousDeadlineDate.getTime() === currentDate.getTime()) {
-                prevCounter = prevCounter + 1;
-                // console.log("prevCounter", prevCounter)
+                let currentDate = new Date(year, month - 1, day)
 
-                if (prevCounter === 1) {
-                    firstName = data[item][0].split(" ")[0].charAt(0).toUpperCase() + data[item][0].split(" ")[0].slice(1);
 
-                    await sendMailData("beforeFiveDays", data[item][1], firstName, data[item][8])
+                if (
+                    previousDeadlineDate.getTime() <= currentDate.getTime() &&
+                    currentDate.getTime() <= endDeadlineDate.getTime()
+                ) {
+                    deadlineUserData.push(data[item]);
                 }
 
-            }
-            else if (currentDate.getTime() === endDeadlineDate.getTime()) {
-                endCounter = endCounter + 1;
+                if (previousDeadlineDate.getTime() === currentDate.getTime()) {
 
-                // console.log("endCounter", endCounter);
+                    // Add Our Logic Here To store in the database i.e. YES
+                    if (data[item][14] === "No") {
+                        response = await sheets.spreadsheets.values.update({
+                            spreadsheetId,
+                            range: `UserData!O${item + 2}`,
+                            valueInputOption: "USER_ENTERED",
+                            resource: { values: [["Yes"]] }
+                        })
 
+                        firstName = data[item][0].split(" ")[0].charAt(0).toUpperCase() + data[item][0].split(" ")[0].slice(1);
 
-                if (endCounter === 1) {
-                    firstName = data[item][0].split(" ")[0].charAt(0).toUpperCase() + data[item][0].split(" ")[0].slice(1);
+                        await sendMailData("beforeFiveDays", data[item][1], firstName, data[item][6])
 
-                    await sendMailData("endSubscription", data[item][1], firstName, data[item][8])
+                    }
                 }
 
+                else if (currentDate.getTime() === endDeadlineDate.getTime()) {
+
+                    // Add Our Logic Here To store in the database i.e. YES
+                    if (data[item][15] === "No") {
+                        response = await sheets.spreadsheets.values.update({
+                            spreadsheetId,
+                            range: `UserData!P${item + 2}`,
+                            valueInputOption: "USER_ENTERED",
+                            resource: { values: [["Yes"]] }
+                        })
+
+                        firstName = data[item][0].split(" ")[0].charAt(0).toUpperCase() + data[item][0].split(" ")[0].slice(1);
+
+                        await sendMailData("endSubscription", data[item][1], firstName, data[item][6])
+
+                    }
+
+                }
             }
         }
 
@@ -1008,52 +752,52 @@ async function feesDeadlineData(req, res) {
             if (mailType === "beforeFiveDays") {
                 subject = `Reminder: Your Subscription Will Expire in 5 Days`;
                 text = `
-                Dear ${firstName},
+Dear ${firstName},
     
-                    We hope this message finds you well! This is a friendly reminder that your subscription with Navyug Gym will expire in 5 days, on ${date}.
+We hope this message finds you well! This is a friendly reminder that your subscription with Navyug Gym will expire in 5 days, on ${date}.
     
-                    We encourage you to renew your membership to continue enjoying our facilities, and the support of our dedicated team to help you reach your fitness goals.
+We encourage you to renew your membership to continue enjoying our facilities, and the support of our dedicated team to help you reach your fitness goals.
     
-                    How to Renew Your Membership:
-                        - Visit Us at the Front Desk - Our team will be happy to assist you with the renewal process.
-                        - Contact Us: If you have any questions, please reach out to us via email at navyuggym@gmail.com or contact our team directly:
-                                        - Mahesh Wagh: +91 3839383933
-                                        - Suresh Tambe: +91 3938393939
-                                        - Santosh M: +91 9393939394
-                                        - Piyush L: +91 8393947322
+How to Renew Your Membership:
+    - Visit Us at the Front Desk - Our team will be happy to assist you with the renewal process.
+    - Contact Us: If you have any questions, please reach out to us via email at navyuggym@gmail.com or contact our team directly:
+                        - Mahesh Wagh: +91 3839383933
+                        - Suresh Tambe: +91 3938393939
+                        - Santosh M: +91 9393939394
+                        - Piyush L: +91 8393947322
                 
-                    We appreciate your commitment to fitness and look forward to supporting you on your journey at Navyug Gym. Don’t hesitate to reach out if you have any questions or need assistance.
+We appreciate your commitment to fitness and look forward to supporting you on your journey at Navyug Gym. Don’t hesitate to reach out if you have any questions or need assistance.
     
-                    Thank you for being a valued member of our gym family!
+Thank you for being a valued member of our gym family!
     
-                    Warm regards,
-                    The Navyug Gym Team
+Warm regards,
+The Navyug Gym Team
             `
             }
 
             else if (mailType === "endSubscription") {
                 subject = `Important: Your Navyug Gym Subscription Ends Today`;
                 text = `
-                    Dear ${firstName},
+Dear ${firstName},
         
-                        We hope you're doing well! We wanted to remind you that your subscription with Navyug Gym is set to expire today, ${date}.
+We hope you're doing well! We wanted to remind you that your subscription with Navyug Gym is set to expire today, ${date}.
         
-                        To continue enjoying uninterrupted access to our facilities, and support, we encourage you to renew your membership as soon as possible.
+To continue enjoying uninterrupted access to our facilities, and support, we encourage you to renew your membership as soon as possible.
         
-                        How to Renew Your Membership:
-                            - Visit Us at the Front Desk - Our team will be happy to assist you with the renewal process.
-                            - Contact Us: If you have any questions, please reach out to us via email at navyuggym@gmail.com or contact our team directly:
-                                            - Mahesh Wagh: +91 3839383933
-                                            - Suresh Tambe: +91 3938393939
-                                            - Santosh M: +91 9393939394
-                                            - Piyush L: +91 8393947322
+How to Renew Your Membership:
+    - Visit Us at the Front Desk - Our team will be happy to assist you with the renewal process.
+    - Contact Us: If you have any questions, please reach out to us via email at navyuggym@gmail.com or contact our team directly:
+                        - Mahesh Wagh: +91 3839383933
+                        - Suresh Tambe: +91 3938393939
+                        - Santosh M: +91 9393939394
+                        - Piyush L: +91 8393947322
                     
-                        We appreciate your commitment to fitness and look forward to supporting you on your journey at Navyug Gym. Don’t hesitate to reach out if you have any questions or need assistance.
+We appreciate your commitment to fitness and look forward to supporting you on your journey at Navyug Gym. Don’t hesitate to reach out if you have any questions or need assistance.
         
-                        Thank you for being a valued member of our gym family!
+Thank you for being a valued member of our gym family!
         
-                        Warm regards,
-                        The Navyug Gym Team
+Warm regards,
+The Navyug Gym Team
                 `
             }
 
@@ -1064,8 +808,8 @@ async function feesDeadlineData(req, res) {
 
         // Sort in Decending order (youngest first)
         deadlineUserData.sort((a, b) => {
-            const dateA = new Date(a[7].split('-').reverse().join('-'));
-            const dateB = new Date(b[7].split('-').reverse().join('-'));
+            const dateA = new Date(a[5].split('-').reverse().join('-'));
+            const dateB = new Date(b[5].split('-').reverse().join('-'));
             return dateB - dateA;
         });
 
@@ -1094,10 +838,6 @@ async function feesSubscriptionEndData(req, res) {
         const month = currentDate.getMonth() + 1; // Months are 0-indexed
         const day = currentDate.getDate();
 
-        // Format the date:
-        const formattedDate
-            = `${day.toString().padStart(2, '0')}-${month.toString().padStart(2, '0')}-${year}`;
-
 
         // Fetch Data
         let data = await fetchData();
@@ -1111,34 +851,37 @@ async function feesSubscriptionEndData(req, res) {
 
         for (let item = 0; item < data.length; item++) {
 
-            let previousEndDeadlineDate = data[item][8];
-            const [startDay, startMonth, startYear] = previousEndDeadlineDate.split("-");
-            previousEndDeadlineDate = new Date(`${startYear}, ${startMonth}- ${startDay}`)
+            if (data[item].length !== 0) {
 
-            let endSubDeadlineDate = data[item][16];
-            const [endDay, endMonth, endYear] = endSubDeadlineDate.split("-");
-            endSubDeadlineDate = new Date(`${endYear}, ${endMonth}- ${endDay}`)
+                let previousEndDeadlineDate = data[item][6];
+                const [endDay, endMonth, endYear] = previousEndDeadlineDate.split("-").map(Number);
 
-            const [currentDay, currentMonth, currentYear] = formattedDate.split("-");
-            let currentDate = new Date(`${currentYear}, ${currentMonth}- ${currentDay}`)
+                previousEndDeadlineDate = new Date(endYear, endMonth - 1, endDay)
 
-            if (previousEndDeadlineDate < currentDate && currentDate <= endSubDeadlineDate) {
-                deadlineUserData.push(data[item]);
-            }
-            else if (endSubDeadlineDate < currentDate) {
+                let endSubDeadlineDate = new Date(previousEndDeadlineDate);
+                endSubDeadlineDate.setDate(endSubDeadlineDate.getDate() + 15);
 
-                try {
-                    responseDrive = drive.files.delete(
-                        {
-                            fileId: data[item][5],
+
+                let currentDate = new Date(year, month - 1, day)
+
+                if (previousEndDeadlineDate < currentDate && currentDate <= endSubDeadlineDate) {
+                    deadlineUserData.push(data[item]);
+                }
+                else if (endSubDeadlineDate < currentDate) {
+
+                    try {
+                        responseDrive = drive.files.delete(
+                            {
+                                fileId: data[item][4],
+                            })
+                        response = await sheets.spreadsheets.values.clear({
+                            spreadsheetId,
+                            range: `UserData!A${item + 2}:P${item + 2} `,
                         })
-                    response = await sheets.spreadsheets.values.clear({
-                        spreadsheetId,
-                        range: `Sheet1!A${item + 2}:Q${item + 2}`,
-                    })
 
-                } catch (error) {
-                    console.log("Error during Deleting: ", error)
+                    } catch (error) {
+                        console.log("Error during Deleting: ", error)
+                    }
                 }
             }
 
@@ -1146,8 +889,8 @@ async function feesSubscriptionEndData(req, res) {
 
         // Sort in Decending order (youngest first)
         deadlineUserData.sort((a, b) => {
-            const dateA = new Date(a[7].split('-').reverse().join('-'));
-            const dateB = new Date(b[7].split('-').reverse().join('-'));
+            const dateA = new Date(a[5].split('-').reverse().join('-'));
+            const dateB = new Date(b[5].split('-').reverse().join('-'));
             return dateB - dateA;
         });
 
@@ -1178,7 +921,6 @@ async function acceptFeesPayment(req, res) {
         let fullInfo;
 
 
-
         //Validate the User
         for (let i = 0; i < adminData.length; i++) {
 
@@ -1194,13 +936,13 @@ async function acceptFeesPayment(req, res) {
 
         for (let j = 0; j < data.length; j++) {
 
-            if (data[j][5] === fileId) {
+            if (data[j][4] === fileId) {
                 firstName = data[j][0]
                 fullInfo = data[j]
-                // console.log(data[j])
+
                 response = await sheets.spreadsheets.values.update({
                     spreadsheetId,
-                    range: `Sheet1!N${j + 2}`,
+                    range: `UserData!L${j + 2}`,
                     valueInputOption: "USER_ENTERED",
                     resource: { values: [["Yes", amount, userName]] }
                 })
@@ -1215,70 +957,7 @@ async function acceptFeesPayment(req, res) {
         let fullName = firstName + " " + lastName;
 
 
-        // Delete the first file from the storage
-        // try {
-        //     fs.unlinkSync(`./files/Receipt.pdf`);
-        //     console.log("File deleted successfully!");
-        // } catch (err) {
-        //     console.error("Error deleting file:", err);
-        // }
-
         // Full Name and meta data send to the pdf method.
-        // await createPdf(fullName, fullInfo, amount); 
-
-        // const pdfPath = await createPdf(fullName, fullInfo, amount);
-        // console.log("PDF Path:", pdfPath);
-        // console.log("done creatapdg");
-
-
-
-        // const receiptPath = path.join(__dirname, "files/Receipt.pdf");
-        // console.log("Receipt file path:", receiptPath);
-
-
-        // if (fs.existsSync(receiptPath)) {
-        //     console.log("File exists!");
-        // } else {
-        //     console.log("File not found.");
-        // }
-
-
-        // function findFile(dir, filename) {
-        //     const files = fs.readdirSync(dir);
-        //     for (let i = 0; i < files.length; i++) {
-        //         const currentPath = path.join(dir, files[i]);
-        //         const stat = fs.statSync(currentPath);
-        //         if (stat.isFile() && files[i] === filename) {
-        //             console.log(`File found at: ${currentPath}`);
-        //             return currentPath;
-        //         } else if (stat.isDirectory()) {
-        //             const found = findFile(currentPath, filename);
-        //             if (found) return found;
-        //         }
-        //     }
-        //     return null;
-        // }
-
-        // // Example usage
-        // const receiptPath = findFile('/opt/render/project/src', 'Receipt.pdf');
-        // if (receiptPath) {
-        //     console.log(`Receipt.pdf found at ${receiptPath}`);
-        // } else {
-        //     console.log('Receipt.pdf not found.');
-        // }
-
-
-        // Ensure that the directory exists
-        // const outputDir = path.join(__dirname, 'files');
-        // if (!fs.existsSync(outputDir)) {
-        //     fs.mkdirSync(outputDir, { recursive: true });
-        // }
-
-
-        // let outputFile = path.join(__dirname, 'files', 'Receipt.pdf');
-
-        // console.log("outputFile", outputFile);
-
 
         const pdfPath = await createPdf(fullName, fullInfo, amount);
 
@@ -1292,31 +971,32 @@ async function acceptFeesPayment(req, res) {
         ]
 
 
+
         // Gmail data
         let subject = "Welcome to Navyug Gym! Your Membership is Approved! 🎉"
         let text = `
-            Dear ${firstName},
-                We’re thrilled to welcome you to Navyug Gym! Your membership registration has been approved, and we look forward to being a part of your fitness journey.
+Dear ${firstName},
+We’re thrilled to welcome you to Navyug Gym! Your membership registration has been approved, and we look forward to being a part of your fitness journey.
 
-                Here are the next steps and some important details:
-                    1] Getting Started: Our team will provide a guided orientation of our facilities on your first visit. Feel free to ask any questions to make the most out of your experience with us!
-                    2] Schedule and Timing: Navyug Gym is open from 6:00 AM to 10:00 AM and 4:00 Am to 10:00 Am,  Monday to Saturday: Open.
-                    3] Contact Us: If you have any questions, please reach out to us via email at navyuggym@gmail.com or contact our team directly:
-                                       - Mahesh Wagh: +91 3839383933
-                                       - Suresh Tambe: +91 3938393939
-                                       - Santosh M: +91 9393939394
-                                       - Piyush L: +91 8393947322
+Here are the next steps and some important details:
+    1] Getting Started: Our team will provide a guided orientation of our facilities on your first visit.Feel free to ask any questions to make the most out of your experience with us!
+    2] Schedule and Timing: Navyug Gym is open from 6:00 AM to 10:00 AM and 4:00 Am to 10:00 Am, Monday to Saturday: Open.
+    3] Contact Us: If you have any questions, please reach out to us via email at navyuggym@gmail.com or contact our team directly:
+                    - Mahesh Wagh: +91 3839383933
+                    - Suresh Tambe: +91 3938393939
+                    - Santosh M: +91 9393939394
+                    - Piyush L: +91 8393947322
 
-                What to Bring on Your First Day:
-                    - Gym attire and any personal equipment you might need.
-                    - A positive attitude and enthusiasm for a great workout!
+What to Bring on Your First Day:
+- Gym attire and any personal equipment you might need.
+- A positive attitude and enthusiasm for a great workout!
 
-                Please Note: We have attached a document to this email with additional details about your membership. Kindly review it for a smooth start with us.
+Please Note: We have attached a document to this email with additional details about your membership.Kindly review it for a smooth start with us.
 
-                Thank you for choosing Navyug Gym. We are excited to help you achieve your fitness goals!
+Thank you for choosing Navyug Gym.We are excited to help you achieve your fitness goals!
 
-                Best regards,
-                Navyug Gym Team
+Best regards,
+Navyug Gym Team
         `
 
         // let attachments = [
@@ -1328,19 +1008,18 @@ async function acceptFeesPayment(req, res) {
         // ]
 
 
-
         if (response.status === 200) {
             await sendMails(fullInfo[1], subject, text, attachments);
-            success = true;
-            return res.status(200).json({ success, Data: "Successfully Add Member" })
         }
 
+        success = true;
+        return res.status(200).json({ success, Data: "Successfully Add Member" })
 
 
     } catch (error) {
         console.log(error.message);
         success = false;
-        return res.status(500).json({ success, Error: "Internal Serval Error Occured!" })
+        return res.json(500).json({ success, Error: "Internal Serval Error Occured!" })
     }
 }
 
@@ -1363,7 +1042,7 @@ async function deletePendingUserData(req, res) {
 
         for (let j = 0; j < data.length; j++) {
 
-            if (data[j][5] === fileId) {
+            if (data[j][4] === fileId) {
 
                 try {
                     responseDrive = drive.files.delete(
@@ -1372,7 +1051,7 @@ async function deletePendingUserData(req, res) {
                         })
                     response = await sheets.spreadsheets.values.clear({
                         spreadsheetId,
-                        range: `Sheet1!A${j + 2}:Q${j + 2}`,
+                        range: `UserData!A${j + 2}:Q${j + 2}`,
                     })
 
 
@@ -1394,10 +1073,14 @@ async function deletePendingUserData(req, res) {
 }
 
 
-// Using cloudinary
+// Using Google drive image.
 async function fetchImage(req, res) {
     try {
-        let imageUrl = "https://res.cloudinary.com/dpkaxrntd/image/upload/v1729657532/iqgpcl1hnra06rdi1e93.jpg"
+        // let imageUrl = "https://res.cloudinary.com/dpkaxrntd/image/upload/v1729657532/iqgpcl1hnra06rdi1e93.jpg"
+
+        let fileId = req.params.id;
+
+        let imageUrl = `https://lh3.googleusercontent.com/d/${fileId}`
 
         // Download the image as a buffer using axios
         // const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
@@ -1420,7 +1103,7 @@ async function fetchImage(req, res) {
         // Send the base64 string back to the frontend
         return res.status(200).json({
             success: true,
-            imageBase64: `data:${imageMimeType};base64,${imageBase64}`,
+            imageLink: `data:${imageMimeType};base64,${imageBase64}`,
         });
         // return res.status(200).json({ success: true, imageUrl });
 
@@ -1435,69 +1118,14 @@ async function fetchImage(req, res) {
 
 
 
-// Fetch Image from google drive
-// async function fetchImageDrive(req, res) {
-//     try {
-
-
-
-
-//     } catch (error) {
-//         console.log(error.message);
-//         success = false;
-//         return res.json(500).json({ success, Error: "Internal Serval Error Occured!" })
-//     }
-// }
-
-
-// const { URL } = require('url'); // Use the URL constructor from the global namespace
-
-// async function fetchImageDrive(req, res) {
-//     try {
-//         // Ensure the URL is a string and not an object
-//         const unsanitizedUrl = String(req.body.url);
-
-//         // Use URL to validate the structure
-//         let parsedUrl;
-//         try {
-//             parsedUrl = new URL(unsanitizedUrl);
-//         } catch {
-//             return res.status(400).json({ success: false, error: 'Invalid URL format' });
-//         }
-
-//         // Additional validation: check domain
-//         if (!isAllowedDomain(parsedUrl.hostname)) {
-//             return res.status(400).json({ success: false, error: 'Invalid domain' });
-//         }
-
-//         // Proceed with your code to fetch the image from the sanitized URL
-//         // (e.g., using axios or fetch)
-
-//         res.json({ success: true, sanitizedUrl: unsanitizedUrl });
-//     } catch (error) {
-//         console.log(error.message);
-//         return res.status(500).json({ success: false, error: 'Internal Server Error' });
-//     }
-// }
-
-// function isAllowedDomain(hostname) {
-//     const allowedDomains = ['google.com', 'drive.google.com'];
-//     return allowedDomains.some(domain => hostname.endsWith(domain));
-// }
-
-
-
 
 // Fetch Home data
-// async function fetchFeesPendingData(req, res) {
 async function fetchHomeData(req, res) {
     try {
 
         const userId = req.user.id;
-
         let data = await fetchData();
         let adminData = await fetchAdminData();
-        let isAdminVerify = false;
         let adminFirstName;
         let totalMembers = 0;
         let insiderMembers = 0;
@@ -1509,73 +1137,61 @@ async function fetchHomeData(req, res) {
         let twentyToThirty = 0;
         let membersAboveThirty = 0;
 
+        let actuallyMember = [];
+
 
         //Validate the User
         for (let i = 0; i < adminData.length; i++) {
 
             // Admin Verification
             if (adminData[i][2] === userId) {
-
-                adminFirstName = adminData[i][0].split(" ")[0];
-
-                isAdminVerify = true;
+                adminFirstName = adminData[i][0].split(" ")[0]
                 break;
             }
         }
 
 
-        if (isAdminVerify) {
 
-            let actuallyMember = [];
+        for (let j = 0; j < data.length; j++) {
+            // Member type: Insider or Outsider
+            if (data[j][12] === "2000") {
+                insiderMembers++;
+                actuallyMember.push(data[j]);
 
-
-            for (let j = 0; j < data.length; j++) {
-                // Member type: Insider or Outsider
-                if (data[j][14] === "2000") {
-                    insiderMembers++;
-                    actuallyMember.push(data[j]);
-
-                } else if (data[j][14] === "4000") {
-                    outsiderMembers++;
-                    actuallyMember.push(data[j]);
-                }
-
+            } else if (data[j][12] === "4000") {
+                outsiderMembers++;
+                actuallyMember.push(data[j]);
             }
 
-            for (let j = 0; j < actuallyMember.length; j++) {
+        }
 
-                // Time slot: Morning or Evening
-                if (actuallyMember[j][12] === "Morning") {
-                    morningMembers++;
-                } else if (actuallyMember[j][12] === "Evening") {
-                    eveningMembers++;
-                }
+        for (let j = 0; j < actuallyMember.length; j++) {
 
-                // Age categories - Only one of these will execute per iteration
-                const age = actuallyMember[j][10];
-                if (age <= 15) {
-                    membersBelowFifteen++;
-                } else if (age <= 20) {
-                    fifteenToTwenty++;
-                } else if (age <= 30) {
-                    twentyToThirty++;
-                } else {
-                    membersAboveThirty++;
-                }
+            // Time slot: Morning or Evening
+            if (actuallyMember[j][10] === "Morning") {
+                morningMembers++;
+            } else if (actuallyMember[j][10] === "Evening") {
+                eveningMembers++;
             }
 
-            // Total Members
-            totalMembers = actuallyMember.length;
-
-            success = true;
-            return res.status(200).json({ success, Data: { adminFirstName, totalMembers, insiderMembers, outsiderMembers, morningMembers, eveningMembers, membersBelowFifteen, fifteenToTwenty, twentyToThirty, membersAboveThirty } })
-
+            // Age categories - Only one of these will execute per iteration
+            const age = actuallyMember[j][8];
+            if (age <= 15) {
+                membersBelowFifteen++;
+            } else if (age <= 20) {
+                fifteenToTwenty++;
+            } else if (age <= 30) {
+                twentyToThirty++;
+            } else {
+                membersAboveThirty++;
+            }
         }
-        else {
-            isAdminVerify = false;
-            success = false;
-            return res.status(400).json({ success, Error: "Admin not found!" })
-        }
+
+        // Total Members
+        totalMembers = actuallyMember.length;
+
+        success = true;
+        return res.status(200).json({ success, Data: { adminFirstName, totalMembers, insiderMembers, outsiderMembers, morningMembers, eveningMembers, membersBelowFifteen, fifteenToTwenty, twentyToThirty, membersAboveThirty } })
 
 
     } catch (error) {
@@ -1598,7 +1214,6 @@ module.exports = {
     acceptFeesPayment,
     deletePendingUserData,
     fetchImage,
-    // fetchImageDrive,
     fetchHomeData,
     feesSubscriptionEndData
 }

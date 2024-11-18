@@ -33,8 +33,7 @@ router.get("/admin/search/", fetchUser, searchUser);
 router.get("/admin/feesdeadline", fetchUser, feesDeadlineData);
 router.put("/admin/feesaccept/:id", fetchUser, acceptFeesPayment);
 router.delete("/admin/deletedata/:id", fetchUser, deletePendingUserData);
-router.get("/admin/fetchimage", fetchImage)
-// router.post("/admin/sanitize", fetchImageDrive)
+router.get("/admin/fetchimage/:id", fetchImage)
 router.get("/admin/homedata", fetchUser, fetchHomeData);
 router.get("/admin/feesend", fetchUser, feesSubscriptionEndData);
 
