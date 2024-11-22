@@ -29,7 +29,6 @@ app.use(cors({
 }))
 
 
-
 // Routes
 app.get('/', (req, res) => {
     return res.json("The Dakshet Ghole");
