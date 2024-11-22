@@ -319,6 +319,61 @@ async function createPdf(fullName, fullInfo, amount) {
 
 
 
+
+
+// Method
+async function createAdminPDF(formattedDate) {
+    // Create a new instance of jsPDF
+    const doc = new jsPDF();
+    // Fetch the data
+    let data = await fetchData();
+    // Add metadata and title
+    doc.setFontSize(8);
+    doc.text(`(since 1954)`, 150, 20);
+    doc.setFontSize(25);
+    doc.setFont("helvetica", "bold");
+    doc.text("Navyug Gym Receipt", 60, 20);
+    doc.setFont("helvetica", "normal");
+    doc.setLineWidth(0.5);
+    doc.line(20, 28, 190, 28);
+    doc.setFontSize(10);
+    doc.text(`Date: ${formattedDate}`, 159, 37);
+    doc.setFontSize(8);
+    // Define starting Y position and page height
+    let startY = 70;
+    const pageHeight = doc.internal.pageSize.height;
+    // Process each record
+    const lineSpacing = 5; // Adjust spacing between lines
+    for (let i = 0; i < data.length; i++) {
+        // Check if adding the next block will overflow the page 
+        if (startY + (10 * lineSpacing) > pageHeight - 3) { // Leave a bottom margin
+            doc.addPage(); // Add a new page
+            startY = 4;   // Reset the Y position for the new page
+        }
+        doc.text(`Name: ${data[i][0]}       Email: ${data[i][1]}      Mobile No: ${data[i][2]}`, 20, startY);
+        startY += lineSpacing;
+        doc.text(`Address: ${data[i][3]}`, 20, startY);
+        startY += lineSpacing;
+        doc.text(`File: ${data[i][4]}       Start Date: ${data[i][5]}       End Date: ${data[i][6]}        Date Of Birth: ${data[i][7]}`, 20, startY);
+        startY += lineSpacing;
+        doc.text(`Age: ${data[i][8]}        Blood Group: ${data[i][9]}        Workout Time: ${data[i][10]}        Fees Paid: ${data[i][11]}        Amount: ${data[i][12]}        Fees Receiver: ${data[i][13]}`, 20, startY);
+        startY += lineSpacing;
+        doc.text(`Before 5 Days Mail Send: ${data[i][14]}               Last Mail: ${data[i][15]}`, 20, startY);
+        startY += lineSpacing + 8; // Add extra spacing after each record
+    }
+    // Save the PDF to a temporary location
+    const tempDir = require('os').tmpdir();
+    const outputPath = path.join(tempDir, "gym-admin-data.pdf");
+    const arrayBuffer = doc.output("arraybuffer");
+    const buffer = Buffer.from(arrayBuffer);
+    fs.writeFileSync(outputPath, buffer);
+    console.log(`PDF saved at: ${outputPath}`);
+    return outputPath;
+}
+
+
+
+
 // Fetch All Data from sheet 1
 async function sendMails(email, subject, text, attachments) {
     try {
@@ -864,10 +919,10 @@ async function feesSubscriptionEndData(req, res) {
 
                 let currentDate = new Date(year, month - 1, day)
 
-                if (previousEndDeadlineDate < currentDate && currentDate <= endSubDeadlineDate) {
+                if (previousEndDeadlineDate.getTime() < currentDate.getTime() && currentDate.getTime() <= endSubDeadlineDate.getTime()) {
                     deadlineUserData.push(data[item]);
                 }
-                else if (endSubDeadlineDate < currentDate) {
+                else if (endSubDeadlineDate.getTime() < currentDate.getTime()) {
 
                     try {
                         responseDrive = drive.files.delete(
@@ -1120,6 +1175,9 @@ async function fetchImage(req, res) {
 
 
 // Fetch Home data
+
+
+// Fetch Home data
 async function fetchHomeData(req, res) {
     try {
 
@@ -1139,6 +1197,17 @@ async function fetchHomeData(req, res) {
 
         let actuallyMember = [];
 
+        let currentDate = new Date();
+
+        // Get individual components:
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth() + 1; // Months are 0-indexed
+        const day = currentDate.getDate();
+
+        // Format the date:
+        const formattedDate
+            = `${day.toString().padStart(2, '0')}-${month.toString().padStart(2, '0')}-${year}`;
+
 
         //Validate the User
         for (let i = 0; i < adminData.length; i++) {
@@ -1150,6 +1219,50 @@ async function fetchHomeData(req, res) {
             }
         }
 
+
+        let subject = "Welcome to Navyug Gym! Your Membership Data! 🎉"
+        let text = `
+Dear Daksh,
+
+Best regards,
+Navyug Gym Team
+        `
+
+
+        // Update data for sending email to Main Admin
+        const sheets = await accessGoogleSheet();
+        let response;
+
+        let previousDate = adminData[0][4];
+        const [endDay, endMonth, endYear] = previousDate.split("-").map(Number);
+        previousDate = new Date(endYear, endMonth - 1, endDay);
+
+        currentDate = new Date(year, month - 1, day)
+
+        if (previousDate.getTime() !== currentDate.getTime()) {
+
+            response = await sheets.spreadsheets.values.update({
+                spreadsheetId,
+                range: `AdminData!E2`,
+                valueInputOption: "USER_ENTERED",
+                resource: { values: [[formattedDate]] }
+            })
+
+            // console.log(response);
+            const pdfPath = await createAdminPDF(formattedDate);
+
+            let attachments = [
+                {
+                    filename: "gym-admin-data.pdf",
+                    path: pdfPath,
+                    contentType: "application/pdf"
+                },
+            ]
+
+            if (response.status === 200) {
+                await sendMails("dakshghole@gmail.com", subject, text, attachments);
+            }
+        }
 
 
         for (let j = 0; j < data.length; j++) {
