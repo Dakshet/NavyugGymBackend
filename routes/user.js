@@ -1,22 +1,9 @@
 const express = require("express");
-const { createUser, loginAdmin, fetchFeesPendingData, searchUser, feesDeadlineData, acceptFeesPayment, deletePendingUserData, fetchImage, fetchHomeData, feesSubscriptionEndData } = require("../controllers/user");
+const { createUser, loginAdmin, fetchFeesPendingData, searchUser, feesDeadlineData, acceptFeesPayment, deletePendingUserData, fetchImage, fetchHomeData, feesSubscriptionEndData, fetchDataMonthWise } = require("../controllers/user");
 const { fetchUser } = require("../middleware/fetchUser");
 const multer = require('multer')
 
 const router = express.Router();
-
-
-// const storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-//         cb(null, './files')
-//     },
-//     filename: function (req, file, cb) {
-//         const uniqueSuffix = Date.now() + file.originalname;
-//         cb(null, uniqueSuffix)
-//     }
-// })
-
-// const upload = multer({ storage: storage })
 
 
 // Custom Storage engine for multer
@@ -36,6 +23,7 @@ router.delete("/admin/deletedata/:id", fetchUser, deletePendingUserData);
 router.get("/admin/fetchimage/:id", fetchImage)
 router.get("/admin/homedata", fetchUser, fetchHomeData);
 router.get("/admin/feesend", fetchUser, feesSubscriptionEndData);
+router.get("/admin/fetchmonthwise/:month", fetchDataMonthWise)
 
 
 module.exports = router;

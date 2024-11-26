@@ -199,7 +199,7 @@ async function uploadToGoogleDrive(fileBuffer, mimeType, fileName) {
 
 
 // Method
-async function createPdf(fullName, fullInfo, amount) {
+async function createPdf(fullName, fullInfo, amount, userName) {
     // Create a new instance of jsPDF
     const doc = new jsPDF();
 
@@ -292,8 +292,8 @@ async function createPdf(fullName, fullInfo, amount) {
 
 
     doc.setFontSize(10);
-    doc.text(`Received by:     Navyug Gym`, 20, 118);
-    doc.text(`Received Signature:  ______________`, 20, 128);
+    doc.text(`Received by:  Navyug Gym`, 20, 118);
+    doc.text(`Received Signature:  ${userName}`, 20, 128);
 
     // Save or output the PDF
     // doc.save("gym-registration-receipt.pdf");
@@ -816,10 +816,10 @@ We encourage you to renew your membership to continue enjoying our facilities, a
 How to Renew Your Membership:
     - Visit Us at the Front Desk - Our team will be happy to assist you with the renewal process.
     - Contact Us: If you have any questions, please reach out to us via email at navyuggym@gmail.com or contact our team directly:
-                        - Mahesh Wagh: +91 3839383933
-                        - Suresh Tambe: +91 3938393939
-                        - Santosh M: +91 9393939394
-                        - Piyush L: +91 8393947322
+                        - Mahesh Wagh: +91 8291616435
+                        - Suresh Tambe: +91 9870216612
+                        - Santosh Mahaprolkar: +91 9969087553
+                        - Piyush Londhe: +91 8355801745
                 
 We appreciate your commitment to fitness and look forward to supporting you on your journey at Navyug Gym. Don’t hesitate to reach out if you have any questions or need assistance.
     
@@ -842,10 +842,10 @@ To continue enjoying uninterrupted access to our facilities, and support, we enc
 How to Renew Your Membership:
     - Visit Us at the Front Desk - Our team will be happy to assist you with the renewal process.
     - Contact Us: If you have any questions, please reach out to us via email at navyuggym@gmail.com or contact our team directly:
-                        - Mahesh Wagh: +91 3839383933
-                        - Suresh Tambe: +91 3938393939
-                        - Santosh M: +91 9393939394
-                        - Piyush L: +91 8393947322
+                        - Mahesh Wagh: +91 8291616435
+                        - Suresh Tambe: +91 9870216612
+                        - Santosh Mahaprolkar: +91 9969087553
+                        - Piyush Londhe: +91 8355801745
                     
 We appreciate your commitment to fitness and look forward to supporting you on your journey at Navyug Gym. Don’t hesitate to reach out if you have any questions or need assistance.
         
@@ -1014,7 +1014,7 @@ async function acceptFeesPayment(req, res) {
 
         // Full Name and meta data send to the pdf method.
 
-        const pdfPath = await createPdf(fullName, fullInfo, amount);
+        const pdfPath = await createPdf(fullName, fullInfo, amount, userName);
 
         // Create attachments
         let attachments = [
@@ -1035,12 +1035,12 @@ We’re thrilled to welcome you to Navyug Gym! Your membership registration has 
 
 Here are the next steps and some important details:
     1] Getting Started: Our team will provide a guided orientation of our facilities on your first visit.Feel free to ask any questions to make the most out of your experience with us!
-    2] Schedule and Timing: Navyug Gym is open from 6:00 AM to 10:00 AM and 4:00 Am to 10:00 Am, Monday to Saturday: Open.
+    2] Schedule and Timing: Navyug Gym is open from 6:00 AM to 10:00 AM and 4:00 PM to 10:00 PM, Monday to Saturday: Open.
     3] Contact Us: If you have any questions, please reach out to us via email at navyuggym@gmail.com or contact our team directly:
-                    - Mahesh Wagh: +91 3839383933
-                    - Suresh Tambe: +91 3938393939
-                    - Santosh M: +91 9393939394
-                    - Piyush L: +91 8393947322
+                        - Mahesh Wagh: +91 8291616435
+                        - Suresh Tambe: +91 9870216612
+                        - Santosh Mahaprolkar: +91 9969087553
+                        - Piyush Londhe: +91 8355801745
 
 What to Bring on Your First Day:
 - Gym attire and any personal equipment you might need.
@@ -1318,6 +1318,49 @@ Navyug Gym Team
 
 
 
+// Fetch data those according the month name
+async function fetchDataMonthWise(req, res) {
+    try {
+
+        // Fetch Month Number
+        const monthNum = req.params.month;
+
+
+        // Fetch Data
+        let data = await fetchData();
+        let monthWiseData = [];
+
+
+        for (let item = 0; item < data.length; item++) {
+
+            if (data[item][15] === "No" && (data[item][5].split('-')[1]) === monthNum) {
+
+                monthWiseData.push(data[item])
+            }
+
+        }
+
+
+        // Sort in Decending order (youngest first)
+        monthWiseData.sort((a, b) => {
+            const dateA = new Date(a[5].split('-').reverse().join('-'));
+            const dateB = new Date(b[5].split('-').reverse().join('-'));
+            return dateB - dateA;
+        });
+
+        success = true;
+        return res.status(200).json({ success, Data: monthWiseData })
+
+
+    } catch (error) {
+        console.log(error.message);
+        success = false;
+        return res.json(500).json({ success, Error: "Internal Serval Error Occured!" })
+    }
+}
+
+
+
 module.exports = {
     createUser,
     loginAdmin,
@@ -1328,6 +1371,7 @@ module.exports = {
     deletePendingUserData,
     fetchImage,
     fetchHomeData,
-    feesSubscriptionEndData
+    feesSubscriptionEndData,
+    fetchDataMonthWise
 }
 
