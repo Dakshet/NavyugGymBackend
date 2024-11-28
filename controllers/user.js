@@ -617,7 +617,7 @@ async function loginAdmin(req, res) {
             }
 
             //Create a token
-            const token = jwt.sign(payload, JWT_SECURE);
+            const token = jwt.sign(payload, JWT_SECURE, { expiresIn: TOKEN_EXPIRATION });
 
             //Final
             success = true;
