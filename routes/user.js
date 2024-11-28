@@ -23,7 +23,7 @@ router.delete("/admin/deletedata/:id", fetchUser, deletePendingUserData);
 router.get("/admin/fetchimage/:id", fetchImage)
 router.get("/admin/homedata", fetchUser, fetchHomeData);
 router.get("/admin/feesend", fetchUser, feesSubscriptionEndData);
-router.get("/admin/fetchmonthwise/:month", fetchDataMonthWise)
+router.get("/admin/fetchmonthwise/:month", fetchUser, fetchDataMonthWise)
 
 
 module.exports = router;

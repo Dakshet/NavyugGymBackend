@@ -578,12 +578,14 @@ async function loginAdmin(req, res) {
         let data = await fetchAdminData();
         let isMobileNoVerify = false;
         let isPasswordVerify = false;
+        let index;
 
         //Validate the User
         for (let i = 0; i < data.length; i++) {
 
             if (data[i][2] === mobileNo) {
                 isMobileNoVerify = true;
+                index = i;
                 break;
             }
         }
@@ -591,13 +593,8 @@ async function loginAdmin(req, res) {
 
         if (isMobileNoVerify) {
 
-            for (let i = 0; i < data.length; i++) {
-
-                if (data[i][3] === password) {
-
-                    isPasswordVerify = true;
-                    break;
-                }
+            if (data[index][3] === password) {
+                isPasswordVerify = true;
             }
         }
         else {
@@ -1035,12 +1032,14 @@ We’re thrilled to welcome you to Navyug Gym! Your membership registration has 
 
 Here are the next steps and some important details:
     1] Getting Started: Our team will provide a guided orientation of our facilities on your first visit.Feel free to ask any questions to make the most out of your experience with us!
-    2] Schedule and Timing: Navyug Gym is open from 6:00 AM to 10:00 AM and 4:00 PM to 10:00 PM, Monday to Saturday: Open.
-    3] Contact Us: If you have any questions, please reach out to us via email at navyuggym@gmail.com or contact our team directly:
-                        - Mahesh Wagh: +91 8291616435
-                        - Suresh Tambe: +91 9870216612
-                        - Santosh Mahaprolkar: +91 9969087553
-                        - Piyush Londhe: +91 8355801745
+    2] Schedule and Timing: Navyug Gym is open from:- Monday to Saturday: 6:00 AM to 10:00 AM and 4:00 PM to 10:00 PM.
+    3] Stay Connected: 
+            - Join our official WhatsApp group for updates and announcements: https://chat.whatsapp.com/Csig12I7EnyH3l2G4Aaafl.
+            - If you have any questions, please reach out to us via email at navyuggym@gmail.com or contact our team directly:
+                    - Mahesh Wagh: +91 8291616435
+                    - Suresh Tambe: +91 9870216612
+                    - Santosh Mahaprolkar: +91 9969087553
+                    - Piyush Londhe: +91 8355801745
 
 What to Bring on Your First Day:
 - Gym attire and any personal equipment you might need.
@@ -1333,7 +1332,7 @@ async function fetchDataMonthWise(req, res) {
 
         for (let item = 0; item < data.length; item++) {
 
-            if (data[item][15] === "No" && (data[item][5].split('-')[1]) === monthNum) {
+            if (data[item][15] === "No" && data[item][11] === "Yes" && (data[item][5].split('-')[1]) === monthNum) {
 
                 monthWiseData.push(data[item])
             }
