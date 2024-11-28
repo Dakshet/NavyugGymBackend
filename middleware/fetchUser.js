@@ -20,13 +20,15 @@ const fetchUser = (req, res, next) => {
             next();
 
         } catch (error) {
+            success = false;
             console.log(error.message);
-            return res.json(500).json({ Error: "Internal Serval Error Occured!" })
+            return res.status(400).json({ success, Error: "Invalid or expired token!" })
         }
 
     } catch (error) {
+        success = false;
         console.log(error.message);
-        return res.json(500).json({ Error: "Internal Serval Error Occured!" })
+        return res.status(500).json({ success, Error: "Internal Serval Error Occured!" })
     }
 }
 

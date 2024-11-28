@@ -10,7 +10,7 @@ const path = require("path")
 const nodemailer = require("nodemailer")
 const { jsPDF } = require("jspdf");     // Import the jsPDF library
 require("jspdf-autotable"); // Import jsPDF autoTable plugin
-
+const TOKEN_EXPIRATION = "10s";     // Token will expire in 1 hour (use other formats like '2d', '10m', '365d' as needed
 let success = false;
 
 
@@ -562,7 +562,7 @@ async function createUser(req, res) {
     } catch (error) {
         console.log(error.message);
         success = false;
-        return res.json(500).json({ success, Error: "Internal Serval Error Occured!" })
+        return res.status(500).json({ success, Error: "Internal Serval Error Occured!" })
     }
 }
 
@@ -633,7 +633,7 @@ async function loginAdmin(req, res) {
     } catch (error) {
         console.log(error.message);
         success = false;
-        return res.json(500).json({ Error: "Internal Serval Error Occured!" })
+        return res.status(500).json({ Error: "Internal Serval Error Occured!" })
     }
 }
 
@@ -670,7 +670,7 @@ async function fetchFeesPendingData(req, res) {
     } catch (error) {
         console.log(error.message);
         success = false;
-        return res.json(500).json({ success, Error: "Internal Serval Error Occured!" })
+        return res.status(500).json({ success, Error: "Internal Serval Error Occured!" })
     }
 }
 
@@ -710,7 +710,7 @@ async function searchUser(req, res) {
     } catch (error) {
         console.log(error.message);
         success = false;
-        return res.json(500).json({ success, Error: "Internal Serval Error Occured!" })
+        return res.status(500).json({ success, Error: "Internal Serval Error Occured!" })
     }
 }
 
@@ -875,7 +875,7 @@ The Navyug Gym Team
     } catch (error) {
         console.log(error.message);
         success = false;
-        return res.json(500).json({ success, Error: "Internal Serval Error Occured!" })
+        return res.status(500).json({ success, Error: "Internal Serval Error Occured!" })
     }
 }
 
@@ -956,7 +956,7 @@ async function feesSubscriptionEndData(req, res) {
     } catch (error) {
         console.log(error.message);
         success = false;
-        return res.json(500).json({ success, Error: "Internal Serval Error Occured!" })
+        return res.status(500).json({ success, Error: "Internal Serval Error Occured!" })
     }
 }
 
@@ -1074,7 +1074,7 @@ Navyug Gym Team
     } catch (error) {
         console.log(error.message);
         success = false;
-        return res.json(500).json({ success, Error: "Internal Serval Error Occured!" })
+        return res.status(500).json({ success, Error: "Internal Serval Error Occured!" })
     }
 }
 
@@ -1123,7 +1123,7 @@ async function deletePendingUserData(req, res) {
     } catch (error) {
         console.log(error.message);
         success = false;
-        return res.json(500).json({ success, Error: "Internal Serval Error Occured!" })
+        return res.status(500).json({ success, Error: "Internal Serval Error Occured!" })
     }
 }
 
@@ -1167,7 +1167,7 @@ async function fetchImage(req, res) {
     } catch (error) {
         console.log(error.message);
         success = false;
-        return res.json(500).json({ success, Error: "Internal Serval Error Occured!" })
+        return res.status(500).json({ success, Error: "Internal Serval Error Occured!" })
     }
 }
 
@@ -1310,7 +1310,7 @@ Navyug Gym Team
     } catch (error) {
         console.log(error.message);
         success = false;
-        return res.json(500).json({ success, Error: "Internal Serval Error Occured!" })
+        return res.status(500).json({ success, Error: "Internal Serval Error Occured!" })
     }
 }
 
@@ -1355,7 +1355,7 @@ async function fetchDataMonthWise(req, res) {
     } catch (error) {
         console.log(error.message);
         success = false;
-        return res.json(500).json({ success, Error: "Internal Serval Error Occured!" })
+        return res.status(500).json({ success, Error: "Internal Serval Error Occured!" })
     }
 }
 
