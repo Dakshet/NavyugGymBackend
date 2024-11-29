@@ -375,7 +375,48 @@ async function createAdminPDF(formattedDate) {
 
 
 // Fetch All Data from sheet 1
-async function sendMails(email, subject, text, attachments) {
+async function sendMails(email, subject, text, secondEmail, attachments) {
+    try {
+
+        // Create reusable transporter object using the default SMTP transport
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            host: "smtp.gmail.com",
+            port: 587,
+            secure: false, // true for port 465, false for other ports
+            auth: {
+                user: process.env.USER,       // Sender gmail address 
+                pass: process.env.APP_PASSWORD,     // App password from gmail account this process are written on the bottom of the web page.
+            },
+        });
+
+
+        // mail with defined transport object
+        const info = await transporter.sendMail({
+            from: {
+                name: "Navyug Gym",
+                address: process.env.USER,
+            }, // sender address
+            // to: "bar@example.com, baz@example.com", // When we have list of receivers and here add gym mail account and our gym account.
+            // to: "dakshsgholedt2000@gmail.com",
+            to: `${email},${secondEmail}`,
+            subject: subject, // Subject line
+            text: text,
+            attachments: attachments
+        });
+
+        console.log("Message sent: %s", info.messageId);
+
+
+    } catch (error) {
+        console.log("Read data error", error.message);
+        // return res.status(400).json({ Error: error.message });
+    }
+}
+
+
+// Fetch All Data from sheet 1
+async function sendAdminMails(email, subject, text, attachments) {
     try {
 
         // Create reusable transporter object using the default SMTP transport
@@ -413,6 +454,7 @@ async function sendMails(email, subject, text, attachments) {
         // return res.status(400).json({ Error: error.message });
     }
 }
+
 
 
 
@@ -853,7 +895,7 @@ The Navyug Gym Team
                 `
             }
 
-            await sendMails(email, subject, text)
+            await sendMails(email, subject, text, "navyuggym2025@gmail.com")
 
         }
 
@@ -1063,7 +1105,7 @@ Navyug Gym Team
 
 
         if (response.status === 200) {
-            await sendMails(fullInfo[1], subject, text, attachments);
+            await sendMails(fullInfo[1], subject, text, "navyuggym2025@gmail.com", attachments);
         }
 
         success = true;
@@ -1259,7 +1301,7 @@ Navyug Gym Team
             ]
 
             if (response.status === 200) {
-                await sendMails("dakshghole@gmail.com", subject, text, attachments);
+                await sendAdminMails("dakshghole@gmail.com", subject, text, attachments);
             }
         }
 
