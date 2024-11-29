@@ -10,7 +10,7 @@ const path = require("path")
 const nodemailer = require("nodemailer")
 const { jsPDF } = require("jspdf");     // Import the jsPDF library
 require("jspdf-autotable"); // Import jsPDF autoTable plugin
-const TOKEN_EXPIRATION = "10s";     // Token will expire in 1 hour (use other formats like '2d', '10m', '365d' as needed
+const TOKEN_EXPIRATION = "45m";     // Token will expire in 1 hour (use other formats like '2d', '10m', '365d' as needed
 let success = false;
 
 
